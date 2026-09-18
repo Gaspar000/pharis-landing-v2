@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharis - Alerta temprana de deserción para universidades</title>
+  <meta name="description" content="Pharis es un tutor con IA que acompaña a cada alumno en su plataforma educativa y da al profesor un tablero de riesgo de deserción en tiempo real. Detecta al alumno en riesgo semanas antes de que la calificación lo revele." />
+  <meta name="theme-color" content="#020617" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Pharis - Alerta temprana de deserción" />
+  <meta property="og:description" content="Un tutor con IA que detecta al alumno en riesgo semanas antes de que la calificación lo revele." />
+  <meta property="og:locale" content="es_419" />
+  <link rel="alternate" hreflang="es" href="https://pharis.mx/" />
+  <link rel="alternate" hreflang="en" href="https://pharis.mx/en/" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 17' fill='none'%3E%3Cpath d='M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z' fill='%23508FF8'/%3E%3Cpath d='M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z' fill='%23508FF8'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fira+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       TOKENS
+       Brand law: ground #020617, accent #508ff8, Manrope + Fira Sans.
+       Discipline borrowed from the design skills: never pure black or
+       pure white, hairline borders before shadows, mostly flat,
+       accent spent only on brand-bearing moments.
+       ============================================================ */
+    :root {
+      /* Dark surfaces */
+      --bg: #020617;
+      --bg-deep: #010410;
+      --panel: #0a1324;
+      --panel-2: #0e1a30;
+      --rule: rgba(231, 238, 247, 0.09);
+      --rule-strong: rgba(80, 143, 248, 0.30);
+
+      /* Accent */
+      --accent: #508ff8;
+      --accent-bright: #74a6fb;
+      --accent-soft: rgba(80, 143, 248, 0.12);
+      --accent-soft-2: rgba(80, 143, 248, 0.18);
+
+      /* Dark text */
+      --text: #e8eef7;
+      --text-muted: #9aa8bd;
+      --text-faint: #64748b;
+
+      /* Light surfaces (cool slate, kept in the brand family) */
+      --light-bg: #f5f8fc;
+      --light-bg-2: #e9eff7;
+      --light-panel: #ffffff;
+      --light-rule: rgba(15, 23, 42, 0.10);
+      --light-text: #0f1b30;
+      --light-muted: #475569;
+      --light-faint: #64748b;
+      --light-accent-text: #1f5fd0;
+
+      --warning: #f0a35a;
+      --amber: #f0a35a;
+      --green: #34d399;
+      --green-soft: rgba(52, 211, 153, 0.14);
+      --amber-soft: rgba(240, 163, 90, 0.14);
+
+      /* Mockup chrome */
+      --mk-bar: #0e1223;
+      --mk-rule: rgba(255, 255, 255, 0.07);
+      --glass: rgba(10, 19, 36, 0.55);
+
+      /* Type scale */
+      --h1: clamp(2.5rem, 6.2vw, 4.4rem);
+      --h2: clamp(1.9rem, 3.8vw, 2.9rem);
+      --h3: 1.22rem;
+      --body: 1.05rem;
+
+      --maxw: 1120px;
+      --maxw-text: 720px;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============================================================ RESET */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Fira Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+      font-size: var(--body);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    h1, h2, h3 { font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+    /* Solo para lectores de pantalla: contenido visualmente oculto pero accesible */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    /* ============================================================ LAYOUT */
+    .container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 2.5rem); }
+    .section { padding-block: clamp(4.5rem, 10vw, 8rem); position: relative; }
+    .section--deep { background: var(--bg-deep); }
+    .section--flush-bottom { padding-bottom: 2.5rem; }
+    .measure { max-width: var(--maxw-text); }
+
+    .eyebrow {
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 1.6rem;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    h2.section-title {
+      font-size: var(--h2);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      margin: 0 0 1.1rem;
+    }
+    .section-sub {
+      color: var(--text-muted);
+      font-size: 1.08rem;
+      margin: 0 0 2.6rem;
+      max-width: 56ch;
+    }
+
+    /* ============================================================ BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 54px;
+      padding: 0 1.6rem;
+      border-radius: var(--radius-sm);
+      font-family: "Manrope", sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      border: 1px solid transparent;
+      transition: transform 0.18s var(--ease), background 0.18s var(--ease), border-color 0.18s var(--ease), color 0.18s var(--ease);
+    }
+    .btn svg { width: 18px; height: 18px; }
+    .btn-primary { background: var(--accent); color: #051023; }
+    .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); }
+    .btn-secondary { background: transparent; color: var(--text); border-color: var(--rule-strong); }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent-bright); transform: translateY(-2px); }
+    .btn-ghost { background: transparent; color: var(--text); border-color: var(--rule); min-height: 46px; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent-bright); }
+    .btn-block { width: 100%; }
+
+    /* On light sections */
+    .on-light .btn-secondary { color: var(--light-text); border-color: var(--light-rule); }
+    .on-light .btn-secondary:hover { border-color: var(--accent); color: var(--light-accent-text); }
+
+    /* ============================================================ NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(2, 6, 23, 0.72);
+      backdrop-filter: saturate(150%) blur(10px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+    }
+    .nav.is-scrolled { border-bottom-color: var(--rule); }
+    .nav-inner { display: flex; align-items: center; gap: 1.5rem; min-height: 66px; }
+    .brand { display: inline-flex; align-items: center; gap: 0.6rem; }
+    .brand .logo { width: 24px; height: auto; }
+    .brand .wordmark {
+      font-family: "Manrope", sans-serif;
+      font-weight: 700;
+      font-size: 1.18rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .nav-links { display: none; gap: 1.8rem; margin-left: auto; }
+    .nav-links a { color: var(--text-muted); font-size: 0.95rem; transition: color 0.18s var(--ease); }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta { margin-left: auto; }
+    @media (min-width: 880px) {
+      .nav-links { display: flex; }
+      .nav-cta { margin-left: 0; }
+    }
+
+    /* ============================================================ HERO */
+    .hero { padding-block: clamp(4.5rem, 11vw, 8rem) clamp(4rem, 9vw, 6.5rem); overflow: hidden; }
+    .hero-grid { display: grid; gap: clamp(3rem, 7vw, 4.5rem); align-items: center; }
+    .hero-grid > * { min-width: 0; }
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.6vw, 3.6rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 0 0 1.5rem;
+      max-width: 16ch;
+    }
+    .hero h1 strong { font-weight: 700; color: var(--text); }
+    .hero .sub {
+      font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+      color: var(--text-muted);
+      max-width: 52ch;
+      margin: 0 0 2.2rem;
+      line-height: 1.6;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+    .hero-note {
+      margin-top: 1.6rem;
+      font-size: 0.9rem;
+      color: var(--text-faint);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .hero-note svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+
+    /* ---------- HERO VISUAL: dashboard mockup + floating cards ---------- */
+    .hero-visual { position: relative; }
+    .mockup-wrap { display: none; } /* mobile: el mockup se oculta */
+
+    .mockup {
+      width: 100%;
+      background: linear-gradient(160deg, #060d20 0%, var(--bg) 70%);
+      border: 1px solid var(--rule-strong);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
+      transform-origin: center;
+      box-shadow:
+        0 50px 90px -30px rgba(2, 6, 23, 0.92),
+        0 28px 50px -22px rgba(2, 6, 23, 0.75),
+        0 0 0 1px rgba(80, 143, 248, 0.18),
+        0 0 42px -6px rgba(80, 143, 248, 0.28);
+    }
+
+    /* Browser chrome (faux-OS window) */
+    .mk-chrome { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.7rem; background: #0a0f1e; border-bottom: 1px solid var(--mk-rule); }
+    .mk-dots { display: flex; gap: 5px; }
+    .mk-dots i { width: 8px; height: 8px; border-radius: 50%; display: block; }
+    .mk-dots i:nth-child(1) { background: #ff5f56; }
+    .mk-dots i:nth-child(2) { background: #ffbd2e; }
+    .mk-dots i:nth-child(3) { background: #27c93f; }
+    .mk-addr { margin-left: 0.35rem; font-size: 0.55rem; color: var(--text-faint); background: rgba(255, 255, 255, 0.04); border: 1px solid var(--mk-rule); border-radius: 999px; padding: 0.2rem 0.65rem; letter-spacing: 0.02em; }
+
+    /* Shell v2: sidebar lateral + columna central */
+    .mockup-v2 .mk-shell { display: flex; align-items: stretch; }
+    .mk-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex-shrink: 0;
+      width: 108px;
+      padding: 0.7rem 0.6rem;
+      background: var(--mk-bar);
+      border-right: 1px solid var(--mk-rule);
+    }
+    .mk-brand { display: flex; align-items: center; gap: 0.35rem; }
+    .mk-brand svg { width: 13px; height: auto; }
+    .mk-brand span { font-family: "Manrope", sans-serif; font-weight: 700; font-size: 0.72rem; letter-spacing: -0.01em; }
+    .mk-nav { display: flex; flex-direction: column; gap: 0.32rem; }
+    .mk-navlink { display: flex; align-items: center; gap: 0.4rem; font-size: 0.5rem; color: var(--text-faint); padding: 0.32rem 0.4rem; border-radius: var(--radius-sm); white-space: nowrap; }
+    .mk-navlink svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .mk-navlink.is-active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+    .mk-sb-group { margin-top: auto; display: flex; flex-direction: column; gap: 0.2rem; padding-top: 0.6rem; border-top: 1px solid var(--mk-rule); }
+    .mk-sb-label { font-size: 0.42rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); }
+    .mk-sb-groupname { font-size: 0.48rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+    .mk-central { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+    /* Header: buscador + notificaciones */
+    .mk-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.55rem 0.8rem; border-bottom: 1px solid var(--mk-rule); }
+    .mk-search { display: flex; align-items: center; gap: 0.35rem; flex: 1; min-width: 0; font-size: 0.5rem; color: var(--text-faint); background: rgba(255, 255, 255, 0.02); border: 1px solid var(--mk-rule); border-radius: var(--radius-sm); padding: 0.32rem 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mk-search svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .mk-bell { position: relative; color: var(--text-muted); display: flex; flex-shrink: 0; }
+    .mk-bell svg { width: 14px; height: 14px; display: block; }
+    .mk-badge { position: absolute; top: -5px; right: -5px; background: #ef4444; color: #fff; font-size: 0.42rem; font-weight: 700; min-width: 12px; height: 12px; border-radius: 999px; display: grid; place-items: center; padding: 0 2px; }
+
+    /* Metric cards row */
+    .mk-metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; padding: 0.75rem 0.8rem 0.6rem; }
+    .mk-metric { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--mk-rule); border-radius: var(--radius-sm); padding: 0.5rem 0.55rem; }
+    .mk-metric--chart { display: flex; align-items: center; justify-content: space-between; gap: 0.3rem; }
+    .mk-mlabel { font-size: 0.45rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); line-height: 1.3; display: block; }
+    .mk-mnum { font-family: "Manrope", sans-serif; font-weight: 800; font-size: 1.2rem; line-height: 1.05; margin-top: 0.25rem; letter-spacing: -0.02em; }
+    .is-green { color: var(--green); }
+    .is-accent { color: var(--accent); }
+    .is-white { color: var(--text); }
+    .is-amber { color: var(--amber); }
+    .mk-vbar { flex-shrink: 0; width: 6px; height: 28px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; display: flex; align-items: flex-end; }
+    .mk-vbar i { display: block; width: 100%; background: linear-gradient(180deg, var(--accent-bright), var(--accent)); border-radius: 999px; }
+    .mk-gauge { flex-shrink: 0; width: 28px; height: 28px; }
+
+    /* Three analytic panels */
+    .mk-panels { display: grid; grid-template-columns: 1.1fr 0.85fr 1.05fr; gap: 0.5rem; padding: 0 0.8rem 0.85rem; }
+    .mk-panel { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--mk-rule); border-radius: var(--radius-sm); padding: 0.55rem 0.6rem; }
+    .mk-ptitle { font-size: 0.45rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.5rem; }
+
+    .mk-feed { display: grid; gap: 0.5rem; }
+    .mk-fitem { line-height: 1.3; }
+    .mk-fitem .who { font-size: 0.55rem; font-weight: 700; color: var(--text); }
+    .mk-fitem .what { font-size: 0.55rem; color: var(--text-muted); }
+    .mk-fitem .when { display: block; font-size: 0.46rem; color: var(--text-faint); margin-top: 0.12rem; }
+
+    .mk-students { display: grid; gap: 0.42rem; }
+    .mk-student { display: flex; align-items: center; gap: 0.45rem; font-size: 0.57rem; color: var(--text); }
+    .mk-student.off { color: var(--text-faint); }
+    .mk-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .mk-dot.is-on { background: var(--green); box-shadow: 0 0 6px rgba(52, 211, 153, 0.6); }
+    .mk-dot.is-off { background: #3a4658; }
+
+    .mk-concepts { display: grid; gap: 0.45rem; }
+    .mk-bar-row { display: grid; gap: 0.2rem; }
+    .mk-bar-head { display: flex; justify-content: space-between; font-size: 0.5rem; }
+    .mk-bar-head .lab { color: var(--text-muted); }
+    .mk-bar-head .val { color: var(--text); font-weight: 700; font-family: "Manrope", sans-serif; }
+    .mk-bar { height: 5px; background: rgba(255, 255, 255, 0.06); border-radius: 999px; overflow: hidden; }
+    .mk-bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); border-radius: 999px; }
+
+    /* Floating glass metric cards (overlay solo en desktop; en móvil manda el teléfono) */
+    .float-cards { display: none; gap: 0.6rem; margin-top: 1.6rem; pointer-events: none; }
+    .float-card {
+      background: var(--glass);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 0.7rem 0.75rem;
+      box-shadow: 0 18px 40px -12px rgba(2, 6, 23, 0.6);
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .float-card .fc-title { font-family: "Manrope", sans-serif; font-weight: 700; font-size: 0.84rem; letter-spacing: -0.01em; line-height: 1.2; display: flex; align-items: baseline; gap: 0.35rem; }
+    .float-card .fc-title .fc-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+    .float-card .fc-sub { font-size: 0.73rem; color: var(--text-muted); margin: 0.25rem 0 0; line-height: 1.35; }
+    .fc-amber { border-color: rgba(240, 163, 90, 0.45); }
+    .fc-amber .fc-title { color: var(--amber); }
+    .fc-amber .fc-dot { background: var(--amber); }
+    .fc-green { border-color: rgba(52, 211, 153, 0.45); }
+    .fc-green .fc-title { color: var(--green); }
+    .fc-green .fc-dot { background: var(--green); }
+    .fc-accent { border-color: rgba(80, 143, 248, 0.5); }
+    .fc-accent .fc-title { color: var(--accent-bright); }
+    .fc-accent .fc-dot { background: var(--accent); }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ---------- HERO VISUAL MÓVIL: teléfono con el sidebar de la extensión ----------
+       Tokens alineados a la extensión real (sidebar.css): surface #0e1223,
+       surface-low #161b30, user bubble #3d6ec9, accent-dim #acc7ff. */
+    .hero-mockup-mobile { display: flex; justify-content: center; margin-top: 2.4rem; }
+    .phone {
+      position: relative;
+      width: 240px;
+      padding: 10px;
+      background: #0a0f1e;
+      border: 3px solid #1e2a3e;
+      border-radius: 36px;
+      box-shadow:
+        0 40px 70px -20px rgba(2, 6, 23, 0.9),
+        0 0 0 1px rgba(80, 143, 248, 0.12),
+        0 0 40px -8px rgba(80, 143, 248, 0.22);
+      animation: floaty 4s ease-in-out infinite;
+      will-change: transform;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      height: 6px;
+      border-radius: 999px;
+      background: #1e2a3e;
+      z-index: 4;
+    }
+    .phone-screen {
+      background: #020617;
+      border-radius: 26px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 430px;
+    }
+    .ph-top { display: flex; align-items: center; gap: 7px; padding: 18px 12px 9px; border-bottom: 1px solid rgba(80, 143, 248, 0.18); flex-shrink: 0; }
+    .ph-top svg.logo { width: 18px; height: 15px; flex-shrink: 0; }
+    .ph-title { font-family: "Manrope", sans-serif; font-weight: 400; font-size: 17px; letter-spacing: -0.5px; color: #508ff8; margin-right: auto; }
+    .ph-gear { display: flex; color: #ffffff; opacity: 0.45; }
+    .ph-gear svg { width: 15px; height: 15px; }
+    .ph-bar { padding: 9px 10px; border-bottom: 1px solid rgba(80, 143, 248, 0.18); flex-shrink: 0; }
+    .ph-dropdown {
+      display: flex; align-items: center; gap: 6px;
+      background: #0e1223;
+      border: 1px solid rgba(80, 143, 248, 0.18);
+      border-radius: 8px;
+      padding: 7px 9px;
+      color: #acc7ff;
+      font-size: 10.5px;
+    }
+    .ph-dropdown .lab { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ph-dropdown svg { width: 13px; height: 13px; opacity: 0.6; flex-shrink: 0; }
+    .ph-chat { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
+    .ph-bubble { max-width: 85%; padding: 8px 11px; font-size: 11.5px; line-height: 1.45; border-radius: 13px; }
+    .ph-bubble.user { align-self: flex-end; background: #3d6ec9; color: #f4f8ff; border-bottom-right-radius: 3px; }
+    .ph-bubble.bot { align-self: flex-start; background: #161b30; border: 1px solid rgba(80, 143, 248, 0.10); color: #e2e2eb; border-bottom-left-radius: 3px; }
+    .ph-composer { display: flex; align-items: flex-end; gap: 7px; padding: 9px 10px; border-top: 1px solid rgba(80, 143, 248, 0.18); flex-shrink: 0; }
+    .ph-input {
+      flex: 1;
+      background: #0e1223;
+      border: 1px solid rgba(80, 143, 248, 0.18);
+      border-radius: 8px;
+      padding: 8px 10px;
+      color: rgba(194, 198, 213, 0.55);
+      font-size: 11.5px;
+    }
+    .ph-send { width: 30px; height: 30px; border-radius: 50%; background: #508ff8; color: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ph-send svg { width: 15px; height: 15px; }
+
+    @media (min-width: 768px) {
+      .hero-grid { grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); }
+      .mockup-wrap { display: block; animation: floaty 4s ease-in-out infinite; will-change: transform; }
+      .hero-mockup-mobile { display: none; }
+      .float-cards { position: absolute; inset: 0; display: block; margin: 0; }
+      .float-card { position: absolute; flex: none; width: max-content; max-width: 215px; padding: 0.8rem 0.95rem; animation: floaty 4s ease-in-out infinite; will-change: transform; z-index: 3; }
+      .float-card .fc-title { font-size: 0.92rem; }
+      .float-card .fc-sub { font-size: 0.78rem; }
+      .fc-amber { top: -7%; left: -9%; animation-delay: 0s; }
+      .fc-green { bottom: 5%; right: -6%; animation-delay: 1s; }
+      .fc-accent { top: -8%; right: 2%; animation-delay: 2s; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mockup-wrap, .float-card, .phone { animation: none !important; }
+    }
+
+    /* ============================================================ PROBLEMA
+       Tres actos de una sola narrativa: (1) el dato como headline integrado,
+       (2) ancla que reconecta con el caso del hero, (3) por qué pasa esto. */
+
+    /* Acto 1: la cohorte que se apaga gradualmente a lo largo del semestre.
+       Un grid de siluetas; las que abandonan se apagan en cascada según su
+       posición en el eje temporal (izquierda = inicio, derecha = fin), no a la
+       vez, y se disuelven en partículas. El eje ancla el "cuándo". */
+    .cohort { margin: 0; }
+    .cohort-stage {
+      position: relative;
+      width: 100%;
+      max-width: 760px;
+      aspect-ratio: 760 / 220;
+    }
+    .cohort-axis {
+      display: flex;
+      justify-content: space-between;
+      max-width: 760px;
+      margin-top: 0.7rem;
+      padding-top: 0.7rem;
+      border-top: 1px solid var(--rule);
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .cohort-figure {
+      position: absolute;
+      top: 0; left: 0;
+      color: var(--text);
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+    .cohort-figure svg { display: block; width: 100%; height: 100%; }
+    /* Partícula de disolución (un punto que deriva hacia afuera y se apaga) */
+    .cohort-dot {
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+    /* Caption: el dato como remate, integrado bajo el visual */
+    .cohort-caption {
+      font-family: "Manrope", sans-serif;
+      font-weight: 500;
+      font-size: clamp(1.3rem, 2.6vw, 2rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text-muted);
+      max-width: 34ch;
+      margin: 1.8rem 0 0;
+      text-wrap: balance;
+    }
+    .cohort-num {
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(120deg, var(--text) 0%, var(--accent) 120%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .cohort-em { color: var(--text); font-weight: 700; }
+    .stat-source { font-size: 11px; color: var(--text-faint); margin: 1.1rem 0 0; }
+
+    /* Acto 2: por qué pasa esto — los dos ángulos como revelación, no nota al pie. */
+    .problem-why { margin-top: clamp(3.5rem, 7vw, 5rem); }
+    .problem-why-label {
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin: 0 0 1.6rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .problem-points { display: grid; gap: 2rem; }
+    .problem-point h3 {
+      font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+      font-weight: 700;
+      margin: 0 0 0.55rem;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .problem-point p { margin: 0; color: var(--text-muted); font-size: 1.05rem; line-height: 1.65; }
+
+    @media (min-width: 760px) {
+      .problem-points { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    }
+
+    /* ============================================================ CONTRASTE LMS
+       Un solo gráfico con dos lecturas del mismo alumno. La línea del LMS
+       (verde, rígida, con palomitas) se mantiene plana hasta desplomarse en
+       el primer cero; la señal real que ve Pharis (accent, orgánica) cae
+       semanas antes. Los marcadores de semana 6 / 14 y la cota superior
+       convierten esa brecha en el argumento: ocho semanas de ventaja. */
+    .pc-card {
+      margin-top: clamp(2.5rem, 5vw, 3.5rem);
+      max-width: 880px;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.25rem 1.05rem;
+    }
+    .pc-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pc-file {
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .pc-legend { display: flex; gap: 1.1rem; flex-wrap: wrap; }
+    .pc-lg {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .pc-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+    .pc-dot--lms { background: var(--green); }
+    .pc-dot--ph { background: var(--accent); }
+    .pc-dot--warn { background: var(--amber); }
+
+    /* Cota de anotaciones: chips ancladas a las semanas 6 y 14, unidas por
+       una línea de medida con la ventaja al centro. En móvil se apilan. */
+    .pc-notes { position: relative; height: 54px; margin: 0.55rem 0 0.15rem; }
+    .pc-span { position: absolute; top: 50%; height: 1px; background: var(--rule-strong); }
+    .pc-note {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      max-width: 46%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      padding: 0.28rem 0.75rem;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
+    }
+    .pc-note--ph { border-color: rgba(80, 143, 248, 0.4); }
+    .pc-note--lms { border-color: rgba(240, 163, 90, 0.38); }
+    .pc-note--gap {
+      border: 0;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.28rem 0.6rem;
+    }
+    .pc-card.is-live .pc-note--ph { opacity: 1; transition-delay: 1.15s; }
+    .pc-card.is-live .pc-note--lms { opacity: 1; transition-delay: 1.35s; }
+    .pc-card.is-live .pc-note--gap { opacity: 1; transition-delay: 1.6s; }
+
+    .pc-plot {
+      position: relative;
+      height: clamp(200px, 30vw, 280px);
+      cursor: crosshair;
+      touch-action: pan-y;
+    }
+    .pc-plot svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+    .pc-svg-label {
+      font-family: "Fira Sans", sans-serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      fill: var(--text-faint);
+    }
+
+    /* Tooltip: contrasta ambas lecturas de la semana bajo el cursor */
+    .pc-tip {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: max-content;
+      max-width: 240px;
+      background: var(--panel-2);
+      border: 1px solid var(--rule-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 0.85rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity 0.15s var(--ease), transform 0.15s var(--ease);
+      z-index: 5;
+      box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8);
+    }
+    .pc-tip.is-on { opacity: 1; transform: translateY(0); }
+    .pc-tip-week { font-family: "Fira Sans", sans-serif; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin: 0 0 0.45rem; }
+    .pc-tip-line { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.82rem; line-height: 1.35; margin: 0; }
+    .pc-tip-line + .pc-tip-line { margin-top: 0.3rem; }
+    .pc-tip-src { font-weight: 700; white-space: nowrap; }
+    .pc-tip-src--lms { color: var(--green); }
+    .pc-tip-src--ph { color: var(--accent-bright); }
+    .pc-tip-val { color: var(--text); }
+
+    .pc-axis {
+      display: flex;
+      justify-content: space-between;
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pc-kicker {
+      margin: clamp(2rem, 4vw, 3rem) 0 0;
+      max-width: 44ch;
+      font-family: "Manrope", sans-serif;
+      font-weight: 500;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      text-wrap: balance;
+    }
+    .pc-kicker-em { color: var(--amber); font-weight: 700; }
+
+    @media (max-width: 760px) {
+      .pc-notes { height: auto; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 0.7rem 0 0.8rem; }
+      .pc-note { position: static; transform: none; max-width: 100%; white-space: normal; overflow: visible; }
+      .pc-note--gap { color: var(--text-muted); }
+      .pc-span { display: none; }
+    }
+
+    /* ============================================================ LIGHT SECTIONS */
+    .on-light { background: var(--light-bg); color: var(--light-text); }
+    .on-light .eyebrow { color: var(--light-accent-text); }
+    .on-light .eyebrow::before { background: var(--light-accent-text); }
+    .on-light .section-sub { color: var(--light-muted); }
+
+    /* ============================================================ COMO FUNCIONA (steps) */
+    .steps { display: grid; gap: 1.25rem; margin-top: 0.5rem; }
+    .step {
+      background: var(--light-panel);
+      border-radius: var(--radius);
+      padding: 2rem 1.8rem;
+      position: relative;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .step:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.06); }
+    .step-num {
+      font-family: "Fira Sans", monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      color: var(--light-accent-text);
+    }
+    .step-icon {
+      width: 44px; height: 44px;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--light-accent-text);
+      margin: 1.1rem 0 1.3rem;
+    }
+    .step-icon svg { width: 24px; height: 24px; }
+    .step h3 { font-size: var(--h3); font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.01em; }
+    .step p { margin: 0; color: var(--light-muted); font-size: 0.98rem; }
+    @media (min-width: 820px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ============================================================ ALUMNO */
+    .split { display: grid; gap: 2.5rem; align-items: center; }
+    .feature-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.4rem; }
+    .feature-list li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+    .feature-ic {
+      width: 40px; height: 40px; flex-shrink: 0;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid var(--rule-strong);
+    }
+    .feature-ic svg { width: 21px; height: 21px; }
+    .feature-list h3 { font-size: 1.12rem; font-weight: 700; margin: 0 0 0.2rem; letter-spacing: -0.01em; }
+    .feature-list p { margin: 0; color: var(--text-muted); font-size: 0.98rem; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.7rem; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.34rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      color: var(--text-muted);
+    }
+    .pill svg { width: 14px; height: 14px; }
+    .quote-card {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2rem;
+    }
+    .quote-card p { margin: 0; font-family: "Manrope", sans-serif; font-weight: 500; font-size: 1.3rem; line-height: 1.4; letter-spacing: -0.01em; }
+    .quote-card .attr { display: block; margin-top: 1rem; font-family: "Fira Sans", sans-serif; font-weight: 400; font-size: 0.9rem; color: var(--text-faint); letter-spacing: 0; }
+    @media (min-width: 860px) { .split { grid-template-columns: 1.15fr 0.85fr; gap: 4rem; } }
+
+    /* ============================================================ PROFESOR (light bento) */
+    .bento { display: grid; gap: 1.25rem; margin-top: 0.5rem; }
+    .tile {
+      background: var(--light-panel);
+      border: 1px solid var(--light-rule);
+      border-radius: var(--radius);
+      padding: 1.9rem;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+    .tile:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06); }
+    .tile-ic {
+      width: 42px; height: 42px;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--light-accent-text);
+      margin-bottom: 1.2rem;
+    }
+    .tile-ic svg { width: 22px; height: 22px; }
+    .tile h3 { font-size: var(--h3); font-weight: 700; margin: 0 0 0.45rem; letter-spacing: -0.01em; }
+    .tile p { margin: 0; color: var(--light-muted); font-size: 0.97rem; }
+    .profesor-banner {
+      background: var(--light-text);
+      color: #f5f8fc;
+      border-radius: var(--radius);
+      padding: 40px clamp(1.5rem, 5vw, 3rem);
+      margin-top: 1.25rem;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+    }
+    .profesor-banner p {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+    }
+    .profesor-banner .accent { color: var(--accent-bright); }
+    @media (min-width: 760px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 980px) { .bento { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ============================================================ ROI */
+    .roi-grid { display: grid; gap: 2.2rem; align-items: stretch; }
+    .calc {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: clamp(1.6rem, 4vw, 2.4rem);
+    }
+    .calc-field { margin-bottom: 1.5rem; }
+    .calc-field:last-child { margin-bottom: 0; }
+    .calc-field label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.55rem;
+      font-weight: 500;
+    }
+    .calc-field label .val { font-family: "Manrope", sans-serif; font-weight: 700; color: var(--text); font-size: 1rem; }
+    .calc-field input[type="range"] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px; border-radius: 999px;
+      background: var(--panel-2); outline: none; margin: 0.4rem 0;
+    }
+    .calc-field input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg);
+      cursor: pointer; box-shadow: 0 0 0 1px var(--rule-strong);
+    }
+    .calc-field input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--bg); cursor: pointer;
+    }
+    /* Foco visible por teclado en el thumb del slider (el track lleva outline:none) */
+    .calc-field input[type="range"]:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px var(--accent-soft-2), 0 0 0 1px var(--accent); }
+    .calc-field input[type="range"]:focus-visible::-moz-range-thumb { box-shadow: 0 0 0 3px var(--accent-soft-2), 0 0 0 1px var(--accent); }
+    .calc-num {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: "Manrope", sans-serif;
+      font-size: 1.05rem;
+      padding: 0.7rem 0.85rem;
+    }
+    .calc-num:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft-2); }
+
+    .result {
+      background: linear-gradient(160deg, var(--panel-2), var(--panel));
+      border: 1px solid var(--rule-strong);
+      border-radius: var(--radius);
+      padding: clamp(1.8rem, 4vw, 2.6rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .result .r-label { font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+    .result .r-loss {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--accent-bright);
+      margin: 0.6rem 0 0.4rem;
+    }
+    .result .r-loss-note { color: var(--text-faint); font-size: 0.9rem; margin: 0; }
+    .result hr { border: none; border-top: 1px solid var(--rule); margin: 1.6rem 0; }
+    .result .r-pay { font-size: 1.05rem; line-height: 1.55; margin: 0; color: var(--text); }
+    .result .r-pay strong { color: var(--accent-bright); font-family: "Manrope", sans-serif; }
+    .result .r-foot { margin: 1.2rem 0 0; font-size: 0.8rem; color: var(--text-faint); }
+    @media (min-width: 880px) { .roi-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* ============================================================ INTEGRACION */
+    .integ-list { list-style: none; margin: 2.2rem 0 0; padding: 0; display: grid; gap: 1rem; }
+    .integ-list li { display: flex; gap: 0.8rem; align-items: flex-start; color: var(--light-muted); }
+    .integ-list svg { width: 22px; height: 22px; color: var(--light-accent-text); flex-shrink: 0; margin-top: 0.1rem; }
+    .integ-diagram {
+      background: var(--light-panel);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+      padding: clamp(1.8rem, 4vw, 2.6rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.4rem;
+      text-align: center;
+    }
+    .integ-diagram svg { width: 100%; max-width: 360px; height: auto; }
+    .integ-diagram .cap { margin: 0; font-size: 0.85rem; color: var(--light-faint); max-width: 30ch; }
+    .integ-diagram .cap strong { color: var(--light-text); font-weight: 600; }
+
+    /* ============================================================ CTA / FORM */
+    .cta-grid { display: grid; gap: 2.8rem; }
+    .cta-copy h2 { font-size: var(--h2); font-weight: 700; line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 1.1rem; }
+    .cta-copy p { color: var(--text-muted); max-width: 42ch; }
+    .direct {
+      margin-top: 2rem; display: grid; gap: 0.8rem;
+    }
+    .direct a {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      color: var(--text); font-weight: 500;
+      transition: color 0.18s var(--ease);
+    }
+    .direct a:hover { color: var(--accent-bright); }
+    .direct svg { width: 20px; height: 20px; color: var(--accent); }
+
+    .form {
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: clamp(1.6rem, 4vw, 2.4rem);
+      display: grid;
+      gap: 1.1rem;
+    }
+    .form label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.4rem; display: block; }
+    .form input {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-family: "Fira Sans", sans-serif;
+      font-size: 1rem;
+      padding: 0.8rem 0.95rem;
+    }
+    .form input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft-2); }
+    .form-note { font-size: 0.82rem; color: var(--text-faint); margin: 0.2rem 0 0; }
+    @media (min-width: 860px) { .cta-grid { grid-template-columns: 0.9fr 1.1fr; gap: 4rem; } }
+
+    /* ============================================================ TESTIMONIO */
+    .testimonial {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      padding: clamp(2rem, 5vw, 3.2rem) clamp(1.8rem, 5vw, 3.4rem) clamp(2.2rem, 5vw, 3.4rem);
+    }
+    .testimonial .mark {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 80px;
+      line-height: 0.6;
+      height: 46px;
+      color: var(--accent);
+      user-select: none;
+    }
+    .testimonial blockquote {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .testimonial .attr {
+      display: block;
+      margin-top: 1.6rem;
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: var(--text-faint);
+    }
+
+    /* ============================================================ FOOTER */
+    .footer { background: var(--bg-deep); border-top: 1px solid var(--rule); padding-block: 3.5rem; }
+    .footer-inner { display: grid; gap: 2rem; }
+    .footer .brand .wordmark { font-size: 1.1rem; }
+    .footer-tag { color: var(--text-faint); font-size: 0.92rem; max-width: 34ch; margin: 0.9rem 0 0; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1.6rem; }
+    .footer-links a { color: var(--text-muted); font-size: 0.92rem; transition: color 0.18s var(--ease); }
+    .footer-links a:hover { color: var(--accent-bright); }
+    .footer-legal { color: var(--text-faint); font-size: 0.82rem; border-top: 1px solid var(--rule); padding-top: 1.6rem; }
+    @media (min-width: 760px) {
+      .footer-inner { grid-template-columns: 1.4fr 1fr; align-items: start; }
+      .footer-links { justify-content: flex-end; }
+    }
+
+    /* ============================================================ VIDEO */
+    .section-video {
+      padding: 100px 0;
+      background: var(--bg);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: "Fira Sans", sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 1.1rem;
+    }
+
+    .label-line {
+      display: inline-block;
+      width: 1.6rem;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.7;
+    }
+
+    .video-wrapper {
+      position: relative;
+      max-width: 900px;
+      margin: 48px auto 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(80,143,248,0.18);
+      box-shadow:
+        0 30px 80px -20px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(80,143,248,0.08);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      background: #020617;
+    }
+
+    .video-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 50px -10px rgba(80,143,248,0.6);
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .video-play-btn:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: var(--accent-bright);
+    }
+
+    .video-play-btn svg {
+      width: 28px;
+      height: 28px;
+      color: white;
+      margin-left: 4px;
+    }
+
+    .video-play-btn.playing {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* ============================================================ REVEAL */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .btn:hover, .step:hover, .tile:hover { transform: none; }
+    }
+
+    /* ============================================================ CURSOR */
+    @media (pointer: fine) {
+      * { cursor: none !important; }
+
+      #cursor-dot {
+        position: fixed;
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.15s;
+        will-change: transform;
+      }
+
+      #cursor-ring {
+        position: fixed;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid rgba(80, 143, 248, 0.5);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s var(--ease), height 0.2s var(--ease), border-color 0.2s, opacity 0.2s;
+        will-change: transform;
+      }
+
+      #cursor-dot.is-hover { opacity: 0; }
+      #cursor-ring.is-hover { width: 48px; height: 48px; border-color: rgba(80, 143, 248, 0.85); }
+      #cursor-ring.is-mockup { width: 64px; height: 64px; border-color: var(--accent); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #cursor-dot, #cursor-ring { display: none; }
+      * { cursor: auto !important; }
+    }
+
+    /* ============================================================ LANG SWITCHER */
+    .lang-switcher { display: flex; align-items: center; gap: 6px; margin-left: 16px; }
+    .lang-btn { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+    .lang-btn.active { color: var(--accent); }
+    .lang-btn:hover { color: var(--text); }
+    .lang-divider { color: var(--text-faint); font-size: 11px; }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ============================================================ NAV -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Pharis, inicio">
+        <!-- Logo Pharis: dos paths en #508FF8 (viewBox 0 0 21 17) -->
+        <svg class="logo" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/>
+          <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/>
+        </svg>
+        <span class="wordmark">Pharis</span>
+      </a>
+      <div class="nav-links">
+        <a href="#problema">El problema</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#demo-video">Demo</a>
+        <a href="#profesor">Profesores</a>
+        <a href="#roi">Retorno</a>
+      </div>
+      <a href="#demo" class="btn btn-ghost nav-cta">Solicitar demo</a>
+      <div class="lang-switcher">
+        <a href="/" class="lang-btn active" hreflang="es">ES</a>
+        <span class="lang-divider">·</span>
+        <a href="/en/" class="lang-btn" hreflang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ============================================================ HERO -->
+    <header class="section hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow reveal">Tutor con IA · Alerta temprana de deserción</p>
+          <h1 class="reveal" data-delay="1">El alumno en riesgo ya dio señales. <strong>Pharis las ve primero.</strong></h1>
+          <p class="sub reveal" data-delay="2">Un tutor con IA que acompaña a cada alumno dentro de su plataforma educativa y entrega al profesor un tablero de riesgo de deserción en tiempo real, semanas antes de que la calificación lo revele.</p>
+          <div class="hero-ctas reveal" data-delay="3">
+            <a href="#demo" class="btn btn-primary">Solicitar demo</a>
+            <a href="https://chromewebstore.google.com/detail/pharis/fpafndddkkpnkhaojhjbalkpecgjbfeh" target="_blank" rel="noopener" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+              Instalar extensión Chrome
+            </a>
+          </div>
+          <p class="hero-note reveal" data-delay="3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            Funciona sobre tu plataforma educativa actual. Sin instalar servidores.
+          </p>
+        </div>
+
+        <!-- Mockup decorativo del dashboard (diseño v2: sidebar + header +
+             métricas con mini-gráfica + paneles) + cards flotantes -->
+        <div class="hero-visual reveal" data-delay="2" aria-hidden="true">
+          <div class="mockup-wrap">
+            <div class="mockup mockup-v2">
+              <!-- Chrome del navegador -->
+              <div class="mk-chrome">
+                <span class="mk-dots"><i></i><i></i><i></i></span>
+                <span class="mk-addr">app.pharis.mx/panel</span>
+              </div>
+              <div class="mk-shell">
+                <!-- Sidebar lateral -->
+                <div class="mk-sidebar">
+                  <span class="mk-brand">
+                    <svg viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/><path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/></svg>
+                    <span>Pharis</span>
+                  </span>
+                  <nav class="mk-nav">
+                    <span class="mk-navlink is-active">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.4"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.4"/><path d="M19.1 4.9c3.9 3.9 3.9 10.2 0 14.1"/></svg>
+                      En vivo
+                    </span>
+                    <span class="mk-navlink">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                      Calificar
+                    </span>
+                    <span class="mk-navlink">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+                      Calendario
+                    </span>
+                  </nav>
+                  <div class="mk-sb-group">
+                    <span class="mk-sb-label">Grupo activo</span>
+                    <span class="mk-sb-groupname">Costos y Presupuestos</span>
+                  </div>
+                </div>
+                <!-- Columna central -->
+                <div class="mk-central">
+                  <div class="mk-header">
+                    <span class="mk-search">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                      Buscar alumnos, materias o entregables…
+                    </span>
+                    <span class="mk-bell">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                      <span class="mk-badge">1</span>
+                    </span>
+                  </div>
+                  <!-- Cards de métricas -->
+                  <div class="mk-metrics">
+                    <div class="mk-metric"><span class="mk-mlabel">Alumnos activos</span><div class="mk-mnum is-green">24</div></div>
+                    <div class="mk-metric"><span class="mk-mlabel">Promedio por sesión</span><div class="mk-mnum is-white">6.2</div></div>
+                    <div class="mk-metric mk-metric--chart">
+                      <div><span class="mk-mlabel">Promedio de calificación</span><div class="mk-mnum is-accent">8.4</div></div>
+                      <div class="mk-vbar"><i style="height:84%"></i></div>
+                    </div>
+                    <div class="mk-metric mk-metric--chart">
+                      <div><span class="mk-mlabel">Entregas del grupo</span><div class="mk-mnum is-amber">76%</div></div>
+                      <svg class="mk-gauge" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+                        <circle cx="18" cy="18" r="15" fill="none" stroke="var(--amber)" stroke-width="4" stroke-linecap="round" stroke-dasharray="94.2 94.2" stroke-dashoffset="22.6" transform="rotate(-90 18 18)"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <!-- Paneles analíticos -->
+                  <div class="mk-panels">
+                    <div class="mk-panel">
+                      <div class="mk-ptitle">Actividad reciente</div>
+                      <div class="mk-feed">
+                        <div class="mk-fitem"><span class="who">Ana García</span> <span class="what">- "punto de equilibrio"</span><span class="when">hace 2 min</span></div>
+                        <div class="mk-fitem"><span class="who">Luis Mendoza</span> <span class="what">- "costos fijos vs variables"</span><span class="when">hace 9 min</span></div>
+                        <div class="mk-fitem"><span class="who">María Torres</span> <span class="what">- "margen de contribución"</span><span class="when">hace 14 min</span></div>
+                        <div class="mk-fitem"><span class="who">Valeria Cruz</span> <span class="what">- "estado de resultados"</span><span class="when">hace 23 min</span></div>
+                      </div>
+                    </div>
+                    <div class="mk-panel">
+                      <div class="mk-ptitle">Alumnos</div>
+                      <div class="mk-students">
+                        <div class="mk-student"><span class="mk-dot is-on"></span> Ana García</div>
+                        <div class="mk-student"><span class="mk-dot is-on"></span> Luis Mendoza</div>
+                        <div class="mk-student"><span class="mk-dot is-on"></span> María Torres</div>
+                        <div class="mk-student off"><span class="mk-dot is-off"></span> Carlos Reyes</div>
+                        <div class="mk-student"><span class="mk-dot is-on"></span> Sofía Luna</div>
+                        <div class="mk-student off"><span class="mk-dot is-off"></span> Diego Silva</div>
+                      </div>
+                    </div>
+                    <div class="mk-panel">
+                      <div class="mk-ptitle">Conceptos con más dudas</div>
+                      <div class="mk-concepts">
+                        <div class="mk-bar-row"><div class="mk-bar-head"><span class="lab">punto equilibrio</span><span class="val">23</span></div><div class="mk-bar"><i style="width:100%"></i></div></div>
+                        <div class="mk-bar-row"><div class="mk-bar-head"><span class="lab">costos fijos</span><span class="val">18</span></div><div class="mk-bar"><i style="width:78%"></i></div></div>
+                        <div class="mk-bar-row"><div class="mk-bar-head"><span class="lab">margen contribución</span><span class="val">15</span></div><div class="mk-bar"><i style="width:65%"></i></div></div>
+                        <div class="mk-bar-row"><div class="mk-bar-head"><span class="lab">estado resultados</span><span class="val">12</span></div><div class="mk-bar"><i style="width:52%"></i></div></div>
+                        <div class="mk-bar-row"><div class="mk-bar-head"><span class="lab">costos variables</span><span class="val">9</span></div><div class="mk-bar"><i style="width:39%"></i></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cards flotantes con glassmorphism -->
+          <div class="float-cards">
+            <div class="float-card fc-amber">
+              <div class="fc-title"><span class="fc-dot"></span>Alerta detectada</div>
+              <p class="fc-sub">Carlos Reyes lleva 8 días sin actividad</p>
+            </div>
+            <div class="float-card fc-green">
+              <div class="fc-title">6 semanas antes</div>
+              <p class="fc-sub">Anticipación promedio de las alertas</p>
+            </div>
+            <div class="float-card fc-accent">
+              <div class="fc-title">847 preguntas</div>
+              <p class="fc-sub">registradas este mes</p>
+            </div>
+          </div>
+
+          <!-- Mockup móvil: teléfono con el sidebar simplificado de la extensión -->
+          <div class="hero-mockup-mobile">
+            <div class="phone">
+              <span class="phone-notch"></span>
+              <div class="phone-screen">
+                <div class="ph-top">
+                  <svg class="logo" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/><path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/></svg>
+                  <span class="ph-title">Pharis</span>
+                  <span class="ph-gear">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  </span>
+                </div>
+                <div class="ph-bar">
+                  <div class="ph-dropdown">
+                    <span class="lab">Entregable 4: Punto de equilibrio</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  </div>
+                </div>
+                <div class="ph-chat">
+                  <div class="ph-bubble user">¿Cómo calculo el punto de equilibrio?</div>
+                  <div class="ph-bubble bot">Mira tu hoja de costos. ¿Cuáles cambian cuando produces más unidades y cuáles se mantienen fijos?</div>
+                </div>
+                <div class="ph-composer">
+                  <div class="ph-input">Escribe tu pregunta…</div>
+                  <span class="ph-send">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================================ PROBLEMA -->
+    <section class="section section--deep" id="problema">
+      <div class="container">
+        <p class="eyebrow reveal">El problema</p>
+
+        <!-- Acto 1: la cohorte que se apaga GRADUALMENTE a lo largo del
+             semestre. No desaparecen de golpe: se van apagando uno a uno, en
+             silencio, mientras emiten partículas que se dispersan. El eje
+             temporal ancla el "cuándo". Generado por JS determinista. -->
+        <div class="cohort reveal" data-delay="1">
+          <div class="cohort-stage" id="cohort-stage" aria-hidden="true"></div>
+          <div class="cohort-axis" aria-hidden="true">
+            <span>Inicio del semestre</span>
+            <span>Fin del semestre</span>
+          </div>
+          <p class="cohort-caption">
+            <span class="cohort-num">1 de cada 2</span>
+            jóvenes que empiezan la universidad en América Latina
+            <span class="cohort-em">no logra terminarla.</span>
+            No desaparecen de repente: se apagan, semana a semana, en silencio.
+          </p>
+          <p class="stat-source">Fuente: Ferreyra, Avitabile, Botero, Haimovich &amp; Urzúa, Banco Mundial, 2017</p>
+        </div>
+
+        <!-- Acto 2: por qué pasa esto (los dos ángulos del mismo problema) -->
+        <div class="problem-why">
+          <p class="problem-why-label reveal">Por qué casi nadie lo ve a tiempo</p>
+          <div class="problem-points">
+            <div class="problem-point reveal">
+              <h3>Cuando la calificación cae, ya es tarde</h3>
+              <p>Para cuando aparece el primer cero, el alumno lleva semanas perdido y la conversación de retención llega cuando ya tomó la decisión de irse.</p>
+            </div>
+            <div class="problem-point reveal" data-delay="1">
+              <h3>El LMS registra entregas, no esfuerzo</h3>
+              <p>Tu plataforma educativa sabe qué se entregó y cuándo. No sabe quién batalló tres horas con un tema, quién dejó de abrir el material ni quién está a punto de rendirse.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ CONTRASTE LMS -->
+    <section class="section section--deep" id="contraste">
+      <div class="container">
+        <p class="eyebrow reveal">El punto ciego</p>
+        <h2 class="section-title reveal" data-delay="1">El mismo alumno, dos realidades.</h2>
+        <p class="section-sub reveal" data-delay="2">Tu LMS registra lo que se entrega. No lo que cuesta llegar a entregarlo.</p>
+
+        <!-- Descripción accesible del gráfico (el gráfico visual es aria-hidden) -->
+        <p class="sr-only">
+          Gráfico de un mismo alumno a lo largo de 16 semanas. La línea del LMS se mantiene
+          plana y en orden hasta la semana 13 y recién cae en la semana 14, cuando aparece
+          el primer cero. La señal real de estudio, que Pharis sí ve, empieza a caer desde
+          la semana 5 y se apaga por completo hacia la semana 13. Pharis alerta en la
+          semana 6: ocho semanas antes de que el LMS muestre el problema.
+        </p>
+
+        <div class="pc-card reveal" data-delay="2" id="pc-card">
+          <div class="pc-head">
+            <span class="pc-file">Registro del semestre &middot; mismo alumno</span>
+            <div class="pc-legend">
+              <span class="pc-lg"><i class="pc-dot pc-dot--lms"></i>Según tu LMS</span>
+              <span class="pc-lg"><i class="pc-dot pc-dot--ph"></i>Lo que ve Pharis</span>
+            </div>
+          </div>
+
+          <!-- Cota: la ventaja entre la alerta de Pharis y el primer cero del LMS -->
+          <div class="pc-notes">
+            <span class="pc-span" id="pc-span" aria-hidden="true"></span>
+            <span class="pc-note pc-note--ph" id="pc-note-ph"><i class="pc-dot pc-dot--ph"></i>Pharis alerta &middot; semana 6</span>
+            <span class="pc-note pc-note--gap" id="pc-note-gap">8 semanas de ventaja</span>
+            <span class="pc-note pc-note--lms" id="pc-note-lms"><i class="pc-dot pc-dot--warn"></i>El LMS ve el primer cero &middot; semana 14</span>
+          </div>
+
+          <div class="pc-plot" id="pc-plot" aria-hidden="true">
+            <svg id="pc-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div class="pc-tip" id="pc-tip">
+              <p class="pc-tip-week"></p>
+              <p class="pc-tip-line"><span class="pc-tip-src pc-tip-src--lms">Tu LMS</span><span class="pc-tip-val" data-lms></span></p>
+              <p class="pc-tip-line"><span class="pc-tip-src pc-tip-src--ph">Pharis</span><span class="pc-tip-val" data-ph></span></p>
+            </div>
+          </div>
+
+          <div class="pc-axis" aria-hidden="true">
+            <span>Semana 1</span>
+            <span>Semana 8</span>
+            <span>Semana 16</span>
+          </div>
+        </div>
+
+        <p class="pc-kicker reveal">
+          Para cuando el LMS muestra el problema, <span class="pc-kicker-em">ya es un cero</span>.
+          Pharis vio la señal apagarse ocho semanas antes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================ COMO FUNCIONA (light) -->
+    <section class="section on-light" id="como-funciona">
+      <div class="container">
+        <p class="eyebrow reveal">Cómo funciona</p>
+        <h2 class="section-title reveal" data-delay="1">De la duda del alumno a la alerta del profesor.</h2>
+        <p class="section-sub reveal" data-delay="2">Tres pasos. El alumno solo estudia como siempre; el sistema hace el resto.</p>
+        <div class="steps">
+          <article class="step reveal">
+            <span class="step-num">PASO 01</span>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h3>El alumno abre Pharis mientras trabaja</h3>
+            <p>En Windows o en Chrome, acompaña al alumno mientras hace su tarea. Conoce las consignas y los materiales de su plataforma.</p>
+          </article>
+          <article class="step reveal" data-delay="1">
+            <span class="step-num">PASO 02</span>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <h3>Pharis registra dudas, patrones y señales</h3>
+            <p>Cada pregunta, cada bloqueo y cada sesión de estudio se vuelven datos. El esfuerzo, que antes era invisible, deja rastro.</p>
+          </article>
+          <article class="step reveal" data-delay="2">
+            <span class="step-num">PASO 03</span>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>El profesor ve quién necesita atención</h3>
+            <p>Semanas antes del primer cero, el tablero marca a los alumnos que se están quedando atrás. Hay tiempo para intervenir.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ DEMO VIDEO -->
+    <section class="section-video reveal" id="demo-video">
+      <div class="container">
+        <div class="section-label">
+          <span class="label-line"></span>
+          DEMO
+        </div>
+        <h2 class="section-title">Míralo en acción.</h2>
+        <p class="section-sub">
+          Del alumno con una duda al profesor con una alerta.
+          Así es Pharis en menos de dos minutos.
+        </p>
+
+        <div class="video-wrapper">
+          <video
+            id="pharis-demo-video"
+            playsinline
+            preload="metadata"
+            poster="assets/video-poster.jpg"
+          >
+            <source src="https://assets.pharis.mx/video-pharis.mp4" type="video/mp4">
+            <!-- TODO: añadir el archivo real de subtítulos en assets/video-pharis.es.vtt -->
+            <track kind="subtitles" src="assets/video-pharis.es.vtt" srclang="es" label="Español" default>
+          </video>
+
+          <button class="video-play-btn" id="video-play-btn" aria-label="Reproducir demo">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 5v14l11-7L8 5z" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PARA EL ALUMNO -->
+    <section class="section" id="alumno">
+      <div class="container">
+        <div class="split">
+          <div>
+            <p class="eyebrow reveal">Para el alumno</p>
+            <h2 class="section-title reveal" data-delay="1">Un tutor que conoce su clase, no un buscador genérico.</h2>
+            <p class="section-sub reveal" data-delay="2">Pharis acompaña al alumno con el contexto de su propia materia y lo lleva a entender, no a copiar.</p>
+            <ul class="feature-list">
+              <li class="reveal">
+                <span class="feature-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </span>
+                <div>
+                  <h3>Conoce sus tareas y materiales de su plataforma</h3>
+                  <p>Responde con el contexto de la consigna, las lecturas y el calendario reales de su curso, no con respuestas de internet.</p>
+                </div>
+              </li>
+              <li class="reveal" data-delay="1">
+                <span class="feature-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </span>
+                <div>
+                  <h3>Disponible en Windows y en Chrome</h3>
+                  <p>App de escritorio para Windows o extensión de Chrome que no requiere instalación. El alumno elige.</p>
+                  <div class="pill-row">
+                    <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="1"/><line x1="2" y1="20" x2="22" y2="20"/></svg> Windows</span>
+                    <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg> Chrome</span>
+                  </div>
+                </div>
+              </li>
+              <li class="reveal" data-delay="2">
+                <span class="feature-ic">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                </span>
+                <div>
+                  <h3>Orienta sin hacer el trabajo por él</h3>
+                  <p>Da pistas, plantea preguntas y revisa el razonamiento. No entrega la tarea resuelta: ayuda al alumno a resolverla.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <aside class="quote-card reveal" data-delay="1">
+            <p>&ldquo;No es un atajo para terminar la tarea. Es el compañero que se sienta al lado a explicarte por qué.&rdquo;</p>
+            <span class="attr">El acompañamiento que un grupo de 200 alumnos nunca pudo recibir uno a uno.</span>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ PARA EL PROFESOR (light) -->
+    <section class="section on-light" id="profesor">
+      <div class="container">
+        <p class="eyebrow reveal">Para el profesor</p>
+        <h2 class="section-title reveal" data-delay="1">El tablero que tu LMS no te da.</h2>
+        <p class="section-sub reveal" data-delay="2">Pharis convierte el trabajo diario de cada alumno en analítica pedagógica accionable, sin pedirte una hora extra.</p>
+        <div class="bento">
+          <article class="tile reveal">
+            <div class="tile-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+            </div>
+            <h3>Tablero en tiempo real</h3>
+            <p>Quién está estudiando, quién dejó de abrir el material y qué temas le cuestan al grupo. Actualizado al momento.</p>
+          </article>
+          <article class="tile reveal" data-delay="1">
+            <div class="tile-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <h3>Alertas de alumnos en riesgo</h3>
+            <p>El sistema marca a quien empieza a quedarse atrás antes de que la calificación lo confirme. Tú decides cuándo intervenir.</p>
+          </article>
+          <article class="tile reveal" data-delay="2">
+            <div class="tile-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg>
+            </div>
+            <h3>Análisis de entregables con IA</h3>
+            <p>Lee los trabajos del grupo y resume patrones, errores frecuentes y avances, para que tu lectura empiece con contexto.</p>
+          </article>
+        </div>
+        <div class="profesor-banner reveal">
+          <p>Pharis no califica. <span class="accent">Orienta tu criterio.</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ ROI -->
+    <section class="section section--deep" id="roi">
+      <div class="container">
+        <p class="eyebrow reveal">El retorno</p>
+        <h2 class="section-title reveal" data-delay="1">Un alumno retenido paga la licencia del campus completo.</h2>
+        <p class="section-sub reveal" data-delay="2">Ajusta las cifras de tu institución y mira lo que la deserción cuesta cada año frente a lo que cuesta evitarla.</p>
+        <div class="roi-grid">
+          <div class="calc reveal">
+            <div class="calc-field">
+              <label for="alumnos">Alumnos matriculados <span class="val" id="alumnos-val">2,000</span></label>
+              <input type="range" id="alumnos" min="200" max="20000" step="100" value="2000" />
+            </div>
+            <div class="calc-field">
+              <label for="desercion">Deserción anual <span class="val" id="desercion-val">35%</span></label>
+              <input type="range" id="desercion" min="5" max="50" step="1" value="35" />
+            </div>
+            <div class="calc-field">
+              <label for="colegiatura">Arancel / colegiatura promedio al año (MXN)</label>
+              <input class="calc-num" type="number" id="colegiatura" min="10000" step="5000" value="85000" inputmode="numeric" />
+            </div>
+          </div>
+          <div class="result reveal" data-delay="1">
+            <span class="r-label">Ingreso perdido por deserción al año</span>
+            <p class="r-loss" id="loss">$0</p>
+            <p class="r-loss-note" id="loss-detail">&nbsp;</p>
+            <hr />
+            <p class="r-pay">Retener <strong>10 alumnos</strong> al año vale <span id="retain-value">$0</span>. Una licencia de campus cuesta <strong><span id="license-cost">$0</span></strong> al año.</p>
+            <p class="r-foot">Comparación ilustrativa: el costo de licencia es una estimación de referencia y el precio final se define por institución. La cifra de retención usa tu colegiatura promedio.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ INTEGRACION (light) -->
+    <section class="section on-light" id="integracion">
+      <div class="container">
+        <div class="split">
+          <div>
+            <p class="eyebrow reveal">Integración</p>
+            <h2 class="section-title reveal" data-delay="1">Funciona con tu plataforma educativa actual.</h2>
+            <p class="section-sub reveal" data-delay="2">Pharis se conecta a la instalación que ya tienes. No reemplaza tu LMS: lo entiende.</p>
+            <ul class="integ-list reveal" data-delay="2">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Sin instalar servidores ni infraestructura nueva.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Sin migrar datos: el contenido sigue viviendo en tu LMS.</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>El alumno entra en Chrome sin instalar nada; en Windows con una app ligera.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="integ-diagram reveal" data-delay="1">
+            <svg viewBox="0 0 380 116" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama: Moodle se conecta a Pharis y Pharis alimenta el tablero del profesor.">
+              <!-- Conectores -->
+              <line x1="96" y1="58" x2="136" y2="58" stroke="#508ff8" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="136,53 144,58 136,63" fill="#508ff8"/>
+              <line x1="238" y1="58" x2="278" y2="58" stroke="#508ff8" stroke-width="2" stroke-linecap="round"/>
+              <polygon points="278,53 286,58 278,63" fill="#508ff8"/>
+
+              <!-- Caja: Moodle -->
+              <rect x="0" y="8" width="96" height="100" rx="12" fill="#ffffff" stroke="rgba(15,23,42,0.12)"/>
+              <g transform="translate(36,28)" stroke="#1f5fd0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </g>
+              <text x="48" y="86" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#0f1b30">Moodle</text>
+              <text x="48" y="100" text-anchor="middle" font-family="Manrope, sans-serif" font-size="9.5" fill="#475569">Canvas · y más</text>
+
+              <!-- Caja: Pharis (destacada) -->
+              <rect x="142" y="8" width="96" height="100" rx="12" fill="#508ff8"/>
+              <g transform="translate(180,29) scale(1.14)" fill="#ffffff">
+                <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z"/>
+                <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z"/>
+              </g>
+              <text x="190" y="92" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#ffffff">Pharis</text>
+
+              <!-- Caja: Dashboard -->
+              <rect x="284" y="8" width="96" height="100" rx="12" fill="#ffffff" stroke="rgba(15,23,42,0.12)"/>
+              <g transform="translate(320,28)" stroke="#1f5fd0" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <rect x="3" y="3" width="7" height="9"/>
+                <rect x="14" y="3" width="7" height="5"/>
+                <rect x="14" y="12" width="7" height="9"/>
+                <rect x="3" y="16" width="7" height="5"/>
+              </g>
+              <text x="332" y="92" text-anchor="middle" font-family="Manrope, sans-serif" font-size="13" font-weight="600" fill="#0f1b30">Tablero</text>
+            </svg>
+            <p class="cap"><strong>Lo conecta, no lo reemplaza.</strong> Tu plataforma educativa le da contexto; Pharis te devuelve el tablero.</p>
+            <p style="font-size: 11px; color: var(--text-faint); margin-top: 12px;">* Actualmente integrado con Moodle. Soporte para Canvas y otros LMS en desarrollo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ SOCIAL PROOF -->
+    <section class="section" id="testimonio">
+      <div class="container">
+        <p class="eyebrow reveal">Testimonios</p>
+        <h2 class="section-title reveal" data-delay="1">Lo que dicen quienes lo usan.</h2>
+        <figure class="testimonial reveal" data-delay="2">
+          <span class="mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>No es un chatbot genérico. Sabe exactamente qué tarea tiene el alumno, qué dice la rúbrica, y me avisa quién va a tener problemas antes de que yo me dé cuenta.</blockquote>
+          <figcaption class="attr">Profesora de Administración<br />Universidad privada, México &middot; 2026</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================ CTA / DEMO -->
+    <section class="section section--deep section--flush-bottom" id="demo">
+      <div class="container">
+        <div class="cta-grid">
+          <div class="cta-copy">
+            <p class="eyebrow reveal">Demo</p>
+            <h2 class="reveal" data-delay="1">Agenda una demo para tu institución.</h2>
+            <p class="reveal" data-delay="2">Te mostramos el tablero con un caso real y calculamos juntos el retorno para tu campus. Sin compromiso.</p>
+            <div class="direct reveal" data-delay="2">
+              <!-- TODO: reemplazar con el número real de WhatsApp -->
+              <a href="https://wa.me/521000000000" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Escríbenos por WhatsApp
+              </a>
+              <a href="mailto:contacto@pharis.mx?subject=Solicitud%20de%20demo%20Pharis">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                contacto@pharis.mx
+              </a>
+            </div>
+          </div>
+
+          <form class="form reveal" data-delay="1" id="demo-form" novalidate>
+            <div>
+              <label for="f-nombre">Nombre</label>
+              <input type="text" id="f-nombre" name="nombre" autocomplete="name" required placeholder="Tu nombre" />
+            </div>
+            <div>
+              <label for="f-institucion">Institución</label>
+              <input type="text" id="f-institucion" name="institucion" autocomplete="organization" required placeholder="Universidad o campus" />
+            </div>
+            <div>
+              <label for="f-email">Correo institucional</label>
+              <input type="email" id="f-email" name="email" autocomplete="email" required placeholder="nombre@universidad.mx" />
+            </div>
+            <div>
+              <label for="f-alumnos">Número de alumnos</label>
+              <input type="number" id="f-alumnos" name="alumnos" min="1" inputmode="numeric" placeholder="2000" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Solicitar demo</button>
+            <p class="form-note">Al enviar se abre tu correo con los datos listos para mandarnos. Respondemos en menos de 24 horas hábiles.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================ FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <a class="brand" href="#top" aria-label="Pharis, inicio">
+          <svg class="logo" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/>
+            <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/>
+          </svg>
+          <span class="wordmark">Pharis</span>
+        </a>
+        <p class="footer-tag">Desarrollado en México para universidades latinoamericanas.</p>
+      </div>
+      <nav class="footer-links" aria-label="Enlaces del pie">
+        <a href="privacy.html">Política de privacidad</a>
+        <a href="mailto:contacto@pharis.mx">Contacto</a>
+      </nav>
+    </div>
+    <div class="container">
+      <p class="footer-legal">© <span id="year">2026</span> Pharis. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Año dinámico ----------
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ---------- Nav: borde al hacer scroll ----------
+    const nav = document.getElementById("nav");
+    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // ---------- Reveal con IntersectionObserver ----------
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reveals = document.querySelectorAll(".reveal");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      reveals.forEach((el) => el.classList.add("is-visible"));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+      reveals.forEach((el) => io.observe(el));
+    }
+
+    // ---------- Cohorte que se apaga gradualmente ("1 de cada 2") ----------
+    (function cohort() {
+      const stage = document.getElementById("cohort-stage");
+      if (!stage) return;
+
+      const COLS = 10, ROWS = 2, TOTAL = COLS * ROWS, LEAVE = TOTAL / 2;
+      const FIG_W = 6;   // % del stage por figura
+      const FIG_H = 42;  // % del stage de alto por figura
+      const PERSON =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+        '<circle cx="12" cy="7" r="3.4"/><path d="M5.5 21v-1.5a6.5 6.5 0 0 1 13 0V21"/></svg>';
+
+      // PRNG determinista (sin Math.random): hash por índice.
+      const rand = (n) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+
+      // Quién abandona: sesgo temporal (más probable hacia el fin del semestre =
+      // columnas de la derecha), pero intercalado, no en bloque. Tomo las LEAVE
+      // figuras con mayor "score" = posición en el eje + ruido determinista.
+      const scored = [];
+      for (let i = 0; i < TOTAL; i++) {
+        const col = i % COLS;
+        scored.push({ i, score: col / (COLS - 1) * 0.7 + rand(i * 3.7) * 0.5 });
+      }
+      const leaveSet = new Set(
+        scored.slice().sort((a, b) => b.score - a.score).slice(0, LEAVE).map((s) => s.i),
+      );
+
+      const WINDOW = 0.22; // cuánto tarda cada figura en apagarse, en unidades de progreso
+      const figures = []; // { el, leaves, when, dots }
+      for (let i = 0; i < TOTAL; i++) {
+        const col = i % COLS, row = Math.floor(i / COLS);
+        const leaves = leaveSet.has(i);
+        const fig = document.createElement("div");
+        fig.className = "cohort-figure";
+        fig.style.width = FIG_W + "%";
+        fig.style.height = FIG_H + "%";
+        fig.style.left = (col * (100 / COLS) + (100 / COLS - FIG_W) / 2) + "%";
+        fig.style.top = (row * 52 + 6) + "%";
+        fig.innerHTML = PERSON;
+        stage.appendChild(fig);
+
+        // Momento de inicio del apagado = posición en el eje temporal (columna)
+        // + jitter. Las de la izquierda (inicio del semestre) se apagan primero.
+        // Se acota a [0, 1 - WINDOW] para que TODA figura complete su
+        // desvanecimiento dentro de p ≤ 1 (si no, las últimas quedan a medias).
+        const whenRaw = col / (COLS - 1) * 0.82 + rand(i * 9.1) * 0.16;
+        const when = leaves ? Math.min(1 - WINDOW, whenRaw) : 0;
+
+        const dots = [];
+        if (leaves) {
+          for (let d = 0; d < 5; d++) {
+            const dot = document.createElement("span");
+            dot.className = "cohort-dot";
+            dot.style.left = (col * (100 / COLS) + 50 / COLS) + "%";
+            dot.style.top = (row * 52 + 26) + "%";
+            stage.appendChild(dot);
+            const ang = (rand(i * 13 + d) - 0.4) * Math.PI;       // sesgo hacia arriba
+            const dist = 30 + rand(i * 7 + d) * 80;
+            dots.push({ el: dot, dx: Math.cos(ang) * dist, dy: -Math.abs(Math.sin(ang)) * dist - 8, delay: rand(i + d) * 0.2 });
+          }
+        }
+        figures.push({ el: fig, leaves, when, dots });
+      }
+
+      function setProgress(p) {
+        // p: 0→1 barre el semestre. Cada figura que abandona se apaga en su
+        // momento `when`; el goteo recorre el eje de izquierda a derecha.
+        figures.forEach((f) => {
+          if (!f.leaves) { f.el.style.opacity = "1"; return; }
+          const local = Math.max(0, Math.min(1, (p - f.when) / WINDOW));
+          f.el.style.opacity = String(1 - local * 0.86);
+          f.el.style.color = local > 0.05 ? "var(--accent)" : "var(--text)";
+          f.el.style.transform = "translateY(" + (local * -6) + "px) scale(" + (1 - local * 0.12) + ")";
+          f.dots.forEach((dt) => {
+            const dl = Math.max(0, Math.min(1, (local - dt.delay) / (1 - dt.delay)));
+            dt.el.style.opacity = String(dl < 0.5 ? dl * 2 * 0.85 : (1 - dl) * 2 * 0.85);
+            dt.el.style.transform = "translate(" + (dt.dx * dl) + "px," + (dt.dy * dl) + "px)";
+          });
+        });
+      }
+
+      if (reduceMotion || !("IntersectionObserver" in window)) {
+        setProgress(1);
+        return;
+      }
+      setProgress(0);
+      let raf = 0, start = 0;
+      const DUR = 2800; // ms — más lento: el goteo debe leerse, no ser un flash
+      const tick = (t) => {
+        if (!start) start = t;
+        const p = Math.min(1, (t - start) / DUR);
+        setProgress(p); // lineal: la cascada barre el eje a ritmo constante
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { cancelAnimationFrame(raf); start = 0; raf = requestAnimationFrame(tick); cio.unobserve(e.target); }
+        });
+      }, { threshold: 0.4 });
+      cio.observe(stage);
+    })();
+
+    // ---------- El punto ciego: dos lecturas del mismo alumno ----------
+    (function blindSpot() {
+      const card = document.getElementById("pc-card");
+      const plot = document.getElementById("pc-plot");
+      const svg = document.getElementById("pc-svg");
+      const tip = document.getElementById("pc-tip");
+      if (!card || !plot || !svg || !tip) return;
+
+      // Señal real de estudio por semana (0-1): cae sostenido desde la semana 5
+      // y se apaga hacia la 13. El LMS reporta plano hasta el primer cero.
+      const REAL = [0.94, 0.91, 0.87, 0.89, 0.8, 0.71, 0.62, 0.54, 0.44, 0.35, 0.26, 0.18, 0.11, 0.06, 0.03, 0.02];
+      const N = REAL.length;
+      const LMS_OK = 0.965, LMS_ZERO = 0.05;
+      const ALERT_W = 5;  // índice 5 = semana 6: Pharis alerta
+      const ZERO_W = 13;  // índice 13 = semana 14: primer cero visible en el LMS
+      const PAD_L = 6, PAD_R = 6, PAD_T = 18, PAD_B = 10;
+
+      const lmsSays = (w) =>
+        w < ZERO_W ? (w % 3 === 2 ? "Entregado" : "Entregado a tiempo")
+        : w === ZERO_W ? "Sin entrega: primer cero"
+        : "Sin entrega";
+      const phSays = (lvl) =>
+        lvl > 0.66 ? "Ritmo normal de estudio"
+        : lvl > 0.4 ? "La actividad empieza a caer"
+        : lvl > 0.1 ? "Casi no abre el material"
+        : "Sin actividad: se apagó";
+
+      const noteA = document.getElementById("pc-note-ph");
+      const noteB = document.getElementById("pc-note-lms");
+      const noteGap = document.getElementById("pc-note-gap");
+      const span = document.getElementById("pc-span");
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const r1 = (n) => n.toFixed(1);
+
+      let W = 0, H = 0, xs = [], yReal = [], yLms = [];
+      let cross = null, dotPh = null, dotLms = null, drawn = false;
+
+      // Curva con tangentes horizontales por tramo: señal orgánica, sin picos.
+      function smoothPath(pts) {
+        let d = "M" + r1(pts[0][0]) + "," + r1(pts[0][1]);
+        for (let i = 1; i < pts.length; i++) {
+          const mx = r1((pts[i - 1][0] + pts[i][0]) / 2);
+          d += "C" + mx + "," + r1(pts[i - 1][1]) + " " + mx + "," + r1(pts[i][1]) + " " + r1(pts[i][0]) + "," + r1(pts[i][1]);
+        }
+        return d;
+      }
+
+      function build() {
+        W = plot.clientWidth; H = plot.clientHeight;
+        if (!W || !H) return;
+        xs = REAL.map((_, i) => PAD_L + (i * (W - PAD_L - PAD_R)) / (N - 1));
+        yReal = REAL.map((v) => PAD_T + (1 - v) * (H - PAD_T - PAD_B));
+        yLms = REAL.map((_, i) => PAD_T + (1 - (i < ZERO_W ? LMS_OK : LMS_ZERO)) * (H - PAD_T - PAD_B));
+
+        const dReal = smoothPath(xs.map((px, i) => [px, yReal[i]]));
+        const dArea = dReal + "L" + r1(xs[N - 1]) + "," + (H - PAD_B) + "L" + r1(xs[0]) + "," + (H - PAD_B) + "Z";
+        const dLms = "M" + r1(xs[0]) + "," + r1(yLms[0]) + "L" + r1(xs[ZERO_W - 1]) + "," + r1(yLms[0]) +
+          "L" + r1(xs[ZERO_W]) + "," + r1(yLms[ZERO_W]) + "L" + r1(xs[N - 1]) + "," + r1(yLms[N - 1]);
+
+        let s = "";
+        // Rejilla recesiva
+        [0.25, 0.5, 0.75].forEach((g) => {
+          const gy = r1(PAD_T + (1 - g) * (H - PAD_T - PAD_B));
+          s += '<line x1="' + PAD_L + '" y1="' + gy + '" x2="' + (W - PAD_R) + '" y2="' + gy + '" stroke="rgba(231,238,247,0.05)"/>';
+        });
+        // Marcadores: alerta de Pharis (accent) y primer cero del LMS (ámbar)
+        s += '<line class="pc-mark" x1="' + r1(xs[ALERT_W]) + '" y1="2" x2="' + r1(xs[ALERT_W]) + '" y2="' + (H - PAD_B) + '" stroke="rgba(80,143,248,0.55)" stroke-dasharray="3 4"/>';
+        s += '<line class="pc-mark" x1="' + r1(xs[ZERO_W]) + '" y1="2" x2="' + r1(xs[ZERO_W]) + '" y2="' + (H - PAD_B) + '" stroke="rgba(240,163,90,0.5)" stroke-dasharray="3 4"/>';
+        // Señal real: área + curva (accent)
+        s += '<path class="pc-area" d="' + dArea + '" fill="rgba(80,143,248,0.09)"/>';
+        s += '<path class="pc-line pc-line--ph" d="' + dReal + '" fill="none" stroke="#508ff8" stroke-width="2" stroke-linecap="round"/>';
+        // Lectura del LMS: plana y rígida hasta el desplome
+        s += '<path class="pc-line pc-line--lms" d="' + dLms + '" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
+        // Palomitas de entrega y ceros huecos sobre la línea del LMS
+        for (let i = 0; i < N; i++) {
+          if (i < ZERO_W) {
+            s += '<g class="pc-check"><circle cx="' + r1(xs[i]) + '" cy="' + r1(yLms[i]) + '" r="5" fill="#0a1324"/>' +
+              '<path d="M' + r1(xs[i] - 3.2) + ',' + r1(yLms[i] + 0.2) + ' l2.4,2.4 l4.2,-4.8" fill="none" stroke="#34d399" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>';
+          } else {
+            s += '<g class="pc-check"><circle cx="' + r1(xs[i]) + '" cy="' + r1(yLms[i]) + '" r="3.2" fill="#0a1324" stroke="#f0a35a" stroke-width="1.6"/></g>';
+          }
+        }
+        // Punto final de la señal real: apagada
+        s += '<circle class="pc-end" cx="' + r1(xs[N - 1]) + '" cy="' + r1(yReal[N - 1]) + '" r="3" fill="#020617" stroke="#508ff8" stroke-width="2"/>';
+        // Etiquetas directas de cada serie
+        s += '<text class="pc-svg-label" x="' + r1(xs[0]) + '" y="' + r1(yLms[0] - 9) + '">SEGÚN TU LMS</text>';
+        s += '<text class="pc-svg-label" x="' + r1(xs[1]) + '" y="' + r1(yReal[2] + 22) + '">ACTIVIDAD REAL</text>';
+        // Capa de hover: crosshair + puntos resaltados
+        s += '<line id="pc-cross" y1="2" y2="' + (H - PAD_B) + '" stroke="rgba(231,238,247,0.22)" opacity="0"/>';
+        s += '<circle id="pc-dot-ph" r="4" fill="#508ff8" stroke="#0a1324" stroke-width="2" opacity="0"/>';
+        s += '<circle id="pc-dot-lms" r="4" fill="#34d399" stroke="#0a1324" stroke-width="2" opacity="0"/>';
+
+        svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+        svg.innerHTML = s;
+        cross = svg.querySelector("#pc-cross");
+        dotPh = svg.querySelector("#pc-dot-ph");
+        dotLms = svg.querySelector("#pc-dot-lms");
+        placeNotes();
+      }
+
+      // Ancla las chips y la línea de medida a las semanas 6 y 14 del plot.
+      function placeNotes() {
+        if (!noteA || !xs.length) return;
+        const xA = xs[ALERT_W], xB = xs[ZERO_W];
+        noteA.style.left = Math.max(xA, noteA.offsetWidth / 2 + 2) + "px";
+        noteB.style.left = Math.min(xB, W - noteB.offsetWidth / 2 - 2) + "px";
+        noteGap.style.left = (xA + xB) / 2 + "px";
+        span.style.left = xA + "px";
+        span.style.width = xB - xA + "px";
+      }
+
+      // Estado previo a la animación de dibujo.
+      function prepHidden() {
+        svg.querySelectorAll(".pc-line").forEach((p) => {
+          const len = p.getTotalLength();
+          p.style.strokeDasharray = len;
+          p.style.strokeDashoffset = len;
+        });
+        svg.querySelectorAll(".pc-area, .pc-check, .pc-mark, .pc-end, .pc-svg-label").forEach((el) => { el.style.opacity = "0"; });
+      }
+
+      // Dibuja: primero la versión oficial del LMS, luego la señal real que
+      // la desmiente; al final los marcadores y la cota.
+      function fire() {
+        if (drawn) return;
+        drawn = true;
+        const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+        [[svg.querySelector(".pc-line--lms"), 0.1], [svg.querySelector(".pc-line--ph"), 0.55]].forEach((pair) => {
+          if (!pair[0]) return;
+          pair[0].style.transition = "stroke-dashoffset 1.2s " + ease + " " + pair[1] + "s";
+          pair[0].style.strokeDashoffset = "0";
+        });
+        svg.querySelectorAll(".pc-check").forEach((c, i) => {
+          c.style.transition = "opacity 0.35s ease " + (0.2 + i * 0.05).toFixed(2) + "s";
+          c.style.opacity = "1";
+        });
+        svg.querySelectorAll(".pc-svg-label").forEach((t, i) => {
+          t.style.transition = "opacity 0.5s ease " + (0.9 + i * 0.25) + "s";
+          t.style.opacity = "1";
+        });
+        svg.querySelectorAll(".pc-mark").forEach((m, i) => {
+          m.style.transition = "opacity 0.5s ease " + (1.3 + i * 0.2) + "s";
+          m.style.opacity = "1";
+        });
+        const area = svg.querySelector(".pc-area");
+        if (area) { area.style.transition = "opacity 0.9s ease 1.25s"; area.style.opacity = "1"; }
+        const end = svg.querySelector(".pc-end");
+        if (end) { end.style.transition = "opacity 0.4s ease 1.6s"; end.style.opacity = "1"; }
+        card.classList.add("is-live");
+      }
+
+      // Hover: misma semana en ambas series, con crosshair y tooltip.
+      let activeW = -1;
+      function setWeek(w) {
+        if (!xs.length || !cross) return;
+        activeW = w;
+        const px = xs[w];
+        cross.setAttribute("x1", px); cross.setAttribute("x2", px); cross.setAttribute("opacity", "1");
+        dotPh.setAttribute("cx", px); dotPh.setAttribute("cy", yReal[w]); dotPh.setAttribute("opacity", "1");
+        dotLms.setAttribute("cx", px); dotLms.setAttribute("cy", yLms[w]); dotLms.setAttribute("opacity", "1");
+        tip.querySelector(".pc-tip-week").textContent = "Semana " + (w + 1);
+        tip.querySelector("[data-lms]").textContent = lmsSays(w);
+        tip.querySelector("[data-ph]").textContent = phSays(REAL[w]);
+        tip.classList.add("is-on");
+        tip.style.left = Math.max(4, Math.min(px - tip.offsetWidth / 2, W - tip.offsetWidth - 4)) + "px";
+      }
+      function clearWeek() {
+        activeW = -1;
+        tip.classList.remove("is-on");
+        if (!cross) return;
+        cross.setAttribute("opacity", "0");
+        dotPh.setAttribute("opacity", "0");
+        dotLms.setAttribute("opacity", "0");
+      }
+      function weekFromEvent(e) {
+        const r = plot.getBoundingClientRect();
+        const t = ((e.clientX - r.left - PAD_L) / Math.max(1, r.width - PAD_L - PAD_R)) * (N - 1);
+        return Math.max(0, Math.min(N - 1, Math.round(t)));
+      }
+      plot.addEventListener("pointermove", (e) => { const w = weekFromEvent(e); if (w !== activeW) setWeek(w); });
+      // Tap en móvil: activar la semana tocada.
+      plot.addEventListener("pointerdown", (e) => setWeek(weekFromEvent(e)));
+      plot.addEventListener("pointerleave", clearWeek);
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => { if (en.isIntersecting && !drawn) { fire(); io.disconnect(); } });
+      }, { threshold: 0.35 });
+
+      build();
+      if (reduced) { drawn = true; card.classList.add("is-live"); }
+      else { prepHidden(); io.observe(plot); }
+
+      // Redibuja al cambiar el ancho (el alto va atado al ancho vía clamp).
+      let lastW = plot.clientWidth;
+      new ResizeObserver(() => {
+        if (plot.clientWidth === lastW) return;
+        lastW = plot.clientWidth;
+        clearWeek();
+        build();
+        if (!drawn) prepHidden();
+      }).observe(plot);
+    })();
+
+    // ---------- Calculadora de ROI ----------
+    const mxn = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
+    const num = new Intl.NumberFormat("es-MX");
+
+    const alumnosEl = document.getElementById("alumnos");
+    const desercionEl = document.getElementById("desercion");
+    const colegiaturaEl = document.getElementById("colegiatura");
+
+    const alumnosVal = document.getElementById("alumnos-val");
+    const desercionVal = document.getElementById("desercion-val");
+    const lossEl = document.getElementById("loss");
+    const lossDetailEl = document.getElementById("loss-detail");
+    const retainValueEl = document.getElementById("retain-value");
+    const licenseCostEl = document.getElementById("license-cost");
+
+    // Anima el valor de un elemento interpolando con requestAnimationFrame (easeOutCubic).
+    function animateNumber(el, to, formatter, duration = 300) {
+      const from = typeof el._cur === "number" ? el._cur : to;
+      if (reduceMotion || from === to) {
+        el._cur = to;
+        el.textContent = formatter(to);
+        return;
+      }
+      if (el._raf) cancelAnimationFrame(el._raf);
+      const start = performance.now();
+      const delta = to - from;
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = formatter(from + delta * eased);
+        if (t < 1) {
+          el._raf = requestAnimationFrame(tick);
+        } else {
+          el._cur = to;
+          el.textContent = formatter(to);
+        }
+      };
+      el._raf = requestAnimationFrame(tick);
+    }
+    const fmtMxn = (v) => mxn.format(Math.round(v));
+    const fmtDetail = (v) => num.format(Math.round(v)) + " estudiantes que no renuevan su matrícula cada año.";
+
+    function recalc() {
+      const alumnos = Math.max(0, Number(alumnosEl.value) || 0);
+      const desercion = Math.max(0, Number(desercionEl.value) || 0) / 100;
+      const colegiatura = Math.max(0, Number(colegiaturaEl.value) || 0);
+
+      const desertores = Math.round(alumnos * desercion);
+      const perdida = desertores * colegiatura;
+
+      // Modelo ilustrativo: retener 10 alumnos = 5x la licencia => licencia = (10 * colegiatura) / 5
+      const valorRetener10 = 10 * colegiatura;
+      const licencia = valorRetener10 / 5;
+
+      // Etiquetas de los sliders: instantáneas (espejo del control).
+      alumnosVal.textContent = num.format(alumnos);
+      desercionVal.textContent = Math.round(desercion * 100) + "%";
+
+      // Cifras de resultado: animadas con conteo de 300ms.
+      animateNumber(lossEl, perdida, fmtMxn);
+      animateNumber(lossDetailEl, desertores, fmtDetail);
+      animateNumber(retainValueEl, valorRetener10, fmtMxn);
+      animateNumber(licenseCostEl, licencia, fmtMxn);
+    }
+
+    [alumnosEl, desercionEl, colegiaturaEl].forEach((el) => el.addEventListener("input", recalc));
+    recalc();
+
+    // ---------- Formulario de demo -> mailto (sin backend) ----------
+    const form = document.getElementById("demo-form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const data = new FormData(form);
+      const nombre = (data.get("nombre") || "").toString().trim();
+      const institucion = (data.get("institucion") || "").toString().trim();
+      const email = (data.get("email") || "").toString().trim();
+      const alumnos = (data.get("alumnos") || "").toString().trim();
+
+      const cuerpo =
+        "Hola, quiero agendar una demo de Pharis para mi institución.%0D%0A%0D%0A" +
+        "Nombre: " + encodeURIComponent(nombre) + "%0D%0A" +
+        "Institución: " + encodeURIComponent(institucion) + "%0D%0A" +
+        "Correo: " + encodeURIComponent(email) + "%0D%0A" +
+        "Número de alumnos: " + encodeURIComponent(alumnos || "No especificado");
+
+      window.location.href =
+        "mailto:contacto@pharis.mx?subject=" +
+        encodeURIComponent("Solicitud de demo Pharis - " + (institucion || nombre)) +
+        "&body=" + cuerpo;
+    });
+
+    /* ---- Video demo ---- */
+    (function () {
+      const video = document.getElementById('pharis-demo-video');
+      const playBtn = document.getElementById('video-play-btn');
+      if (!video || !playBtn) return;
+
+      playBtn.addEventListener('click', function () {
+        video.play();
+        playBtn.classList.add('playing');
+      });
+
+      video.addEventListener('pause', function () {
+        playBtn.classList.remove('playing');
+      });
+
+      video.addEventListener('ended', function () {
+        playBtn.classList.remove('playing');
+      });
+
+      video.addEventListener('play', function () {
+        video.controls = true;
+      });
+    })();
+
+    /* ---- Custom cursor ---- */
+    (function () {
+      if (!window.matchMedia("(pointer: fine)").matches) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const dot  = document.getElementById("cursor-dot");
+      const ring = document.getElementById("cursor-ring");
+      if (!dot || !ring) return;
+
+      let mouseX = 0, mouseY = 0;
+      let ringX  = 0, ringY  = 0;
+
+      document.addEventListener("mousemove", function (e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + "px";
+        dot.style.top  = mouseY + "px";
+      });
+
+      (function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.left = ringX + "px";
+        ring.style.top  = ringY + "px";
+        requestAnimationFrame(animateRing);
+      })();
+
+      const interactiveSelector = "a, button, label, [role=button], input, select, textarea";
+      const mockupSelector = ".mockup-wrap";
+
+      document.addEventListener("mouseover", function (e) {
+        const onMockup     = e.target.closest(mockupSelector);
+        const onInteractive = e.target.closest(interactiveSelector);
+
+        ring.classList.toggle("is-mockup",  !!onMockup && !onInteractive);
+        ring.classList.toggle("is-hover",   !!onInteractive);
+        dot.classList.toggle("is-hover",    !!onInteractive);
+      });
+    })();
+  </script>
+</body>
+</html>

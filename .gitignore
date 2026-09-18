@@ -1,0 +1,16 @@
+# Dependencies / build
+node_modules/
+dist/
+
+# Local Claude state
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp render artifacts
+.__shot-*.png
+.__check.js

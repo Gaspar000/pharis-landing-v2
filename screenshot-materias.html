@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pharis - Captura selector de materias (1280×800)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: #0b1120;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      padding: 40px;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    /* Lienzo exacto: 1280 × 800 */
+    #canvas {
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background: #0b1120;
+    }
+
+    /* ── Cromo del navegador ── */
+    .chrome {
+      height: 48px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      background: #1f2430;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+    .chrome .dots { display: flex; gap: 7px; }
+    .chrome .dots i { width: 12px; height: 12px; border-radius: 50%; display: block; }
+    .chrome .dots i:nth-child(1) { background: #ff5f56; }
+    .chrome .dots i:nth-child(2) { background: #ffbd2e; }
+    .chrome .dots i:nth-child(3) { background: #27c93f; }
+    .chrome .tab {
+      margin-left: 6px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      background: #2b3140;
+      border-radius: 8px 8px 0 0;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .chrome .addr {
+      margin-left: 8px;
+      flex: 1;
+      height: 30px;
+      border-radius: 15px;
+      background: #2b3140;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 12px;
+      color: #94a3b8;
+      gap: 8px;
+    }
+    .chrome .addr svg { width: 13px; height: 13px; opacity: 0.7; }
+
+    /* ── Cuerpo: página web + sidebar ── */
+    .body { flex: 1; display: flex; min-height: 0; }
+
+    /* Página de universidad (placeholder) */
+    .webpage {
+      flex: 1;
+      background: #eef2f7;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .web-nav {
+      height: 58px;
+      flex-shrink: 0;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 0 36px;
+    }
+    .web-logo {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: 1px;
+      color: #e2e8f0;
+    }
+    .web-nav .links { display: flex; gap: 22px; margin-left: 10px; }
+    .web-nav .links span { width: 64px; height: 9px; border-radius: 5px; background: rgba(226, 232, 240, 0.28); }
+    .web-nav .avatar { margin-left: auto; width: 30px; height: 30px; border-radius: 50%; background: rgba(226, 232, 240, 0.25); }
+
+    .web-main { padding: 44px 48px; display: flex; flex-direction: column; gap: 22px; }
+    .web-title { width: 58%; height: 30px; border-radius: 7px; background: #cbd5e1; }
+    .web-lines { display: flex; flex-direction: column; gap: 12px; }
+    .web-lines span { height: 12px; border-radius: 6px; background: #d8dee8; }
+    .web-lines span:nth-child(1) { width: 92%; }
+    .web-lines span:nth-child(2) { width: 86%; }
+    .web-lines span:nth-child(3) { width: 94%; }
+    .web-lines span:nth-child(4) { width: 70%; }
+    .web-cards { display: flex; gap: 20px; margin-top: 14px; }
+    .web-card {
+      flex: 1;
+      height: 168px;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #dfe5ee;
+      box-shadow: 0 2px 14px rgba(15, 23, 42, 0.05);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .web-card .thumb { height: 72px; border-radius: 8px; background: #e7edf5; }
+    .web-card .bar { height: 11px; border-radius: 6px; background: #d8dee8; }
+    .web-card .bar.short { width: 55%; }
+
+    /* ── Sidebar de Pharis (replica fiel) ── */
+    .sidebar {
+      width: 384px;
+      flex-shrink: 0;
+      background: #020617;
+      border-left: 1px solid rgba(80, 143, 248, 0.18);
+      display: flex;
+      flex-direction: column;
+    }
+    .ext-topbar {
+      height: 44px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(80, 143, 248, 0.18);
+    }
+    .ext-topbar svg.logo { width: 20px; height: 17px; flex-shrink: 0; }
+    .ext-topbar .t-title {
+      font-family: "Manrope", sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      letter-spacing: -0.5px;
+      color: #508ff8;
+      margin-right: auto;
+    }
+    .ext-topbar .t-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; color: white; opacity: 0.45; }
+    .ext-topbar .t-btn svg { width: 16px; height: 16px; }
+
+    .ext-screen { flex: 1; padding: 24px 16px; display: flex; flex-direction: column; min-height: 0; }
+    .ext-title {
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #e2e2eb;
+      margin-bottom: 20px;
+    }
+    .course-grid { display: flex; flex-direction: column; gap: 8px; }
+    .course-card {
+      background: #0e1223;
+      border: 1px solid rgba(80, 143, 248, 0.18);
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+    }
+    .course-card.is-hover {
+      border-color: #508ff8;
+      background: #161b30;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(80, 143, 248, 0.12);
+    }
+    .course-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #e2e2eb;
+      line-height: 1.35;
+      letter-spacing: 0.3px;
+    }
+
+    /* Controles fuera del lienzo */
+    .cap-btn {
+      font-family: "Fira Sans", sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      background: #508ff8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .cap-btn:hover { filter: brightness(1.08); }
+    .hint { color: #64748b; font-size: 12px; text-align: center; }
+    .hint code { color: #acc7ff; }
+  </style>
+</head>
+<body>
+  <div id="canvas">
+    <!-- Cromo del navegador -->
+    <div class="chrome">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="tab">Aula virtual - Universidad</span>
+      <span class="addr">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        aulavirtual.universidad.mx/curso/costos
+      </span>
+    </div>
+
+    <div class="body">
+      <!-- Página de universidad (placeholder) -->
+      <div class="webpage">
+        <div class="web-nav">
+          <span class="web-logo">UNIVERSIDAD</span>
+          <div class="links"><span></span><span></span><span></span><span></span></div>
+          <div class="avatar"></div>
+        </div>
+        <div class="web-main">
+          <div class="web-title"></div>
+          <div class="web-lines"><span></span><span></span><span></span><span></span></div>
+          <div class="web-cards">
+            <div class="web-card"><div class="thumb"></div><div class="bar"></div><div class="bar short"></div></div>
+            <div class="web-card"><div class="thumb"></div><div class="bar"></div><div class="bar short"></div></div>
+            <div class="web-card"><div class="thumb"></div><div class="bar"></div><div class="bar short"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar de Pharis -->
+      <div class="sidebar">
+        <div class="ext-topbar">
+          <svg class="logo" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/>
+            <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/>
+          </svg>
+          <span class="t-title">Pharis</span>
+          <span class="t-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+        </div>
+
+        <div class="ext-screen">
+          <h1 class="ext-title">¿Con qué materia vas a trabajar hoy?</h1>
+          <div class="course-grid">
+            <div class="course-card is-hover"><span class="course-name">COSTOS Y PRESUPUESTOS</span></div>
+            <div class="course-card"><span class="course-name">CONTABILIDAD BÁSICA</span></div>
+            <div class="course-card"><span class="course-name">FINANZAS EMPRESARIALES</span></div>
+            <div class="course-card"><span class="course-name">FUNDAMENTOS DE LA NUBE</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="cap-btn" data-html2canvas-ignore="true" onclick="capture()">Descargar PNG (1280×800)</button>
+  <p class="hint" data-html2canvas-ignore="true">
+    Para máxima nitidez también puedes inspeccionar <code>#canvas</code> y usar “Capture node screenshot” en DevTools.
+  </p>
+
+  <script>
+    function capture() {
+      const node = document.getElementById("canvas");
+      html2canvas(node, {
+        backgroundColor: "#0b1120",
+        scale: 1,
+        width: 1280,
+        height: 800,
+        windowWidth: 1280,
+        windowHeight: 800,
+      }).then((canvas) => {
+        const a = document.createElement("a");
+        a.download = "screenshot-materias-1280x800.png";
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+      });
+    }
+  </script>
+</body>
+</html>

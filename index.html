@@ -1475,8 +1475,8 @@
         const h1Style = getComputedStyle(document.querySelector('#ph2-hero h1'));
         const fontSizePx = parseFloat(h1Style.fontSize);
         const ascent = glyphAscent('i', fontSizePx, h1Style.fontWeight, h1Style.fontFamily);
-        const LAMP_OFFSET_X = fontSizePx * 0.1539;
-        const LAMP_OFFSET_Y = -fontSizePx * 0.3076;
+        const LAMP_OFFSET_X = fontSizePx * 0.1539 - 3;
+        const LAMP_OFFSET_Y = -fontSizePx * 0.3076 - 3;
         lampPx = {
           x: tickRect.left - heroRect.left + LAMP_OFFSET_X,
           y: tickRect.bottom - ascent - heroRect.top + LAMP_OFFSET_Y

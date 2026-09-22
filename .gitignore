@@ -14,3 +14,9 @@ Thumbs.db
 # Temp render artifacts
 .__shot-*.png
 .__check.js
+
+# Debug/review screenshots (not site content)
+check-y*.png
+landing-v2-*.png
+hero-luz-desktop.png
+.playwright-cli/

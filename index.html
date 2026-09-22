@@ -1151,6 +1151,158 @@
     .lang-btn.active { color: var(--accent); }
     .lang-btn:hover { color: var(--text); }
     .lang-divider { color: var(--text-faint); font-size: 11px; }
+
+    /* ============================================================
+       HERO v2 — namespace ph2-* para no chocar con las reglas del
+       resto del sitio (dark mode por defecto). Todo lo que vive
+       dentro de #ph2-hero usa sus propios tokens de color en fondo
+       blanco, sin heredar --bg/--text globales. Placeholder de
+       migración: en cuanto se apruebe, este bloque reemplaza --bg
+       global y se retira el namespace.
+       ============================================================ */
+    #ph2-hero {
+      --ph2-bg: #ffffff;
+      --ph2-accent: #508ff8;
+      --ph2-accent-bright: #2f6fe0;
+      --ph2-text: #0f1b30;
+      --ph2-text-muted: #475569;
+      --ph2-text-faint: #94a3b8;
+      --ph2-rule: rgba(15, 23, 42, 0.10);
+      --ph2-h1: clamp(2.6rem, 6.4vw, 4.6rem);
+
+      position: relative;
+      background: var(--ph2-bg);
+      color: var(--ph2-text);
+      font-family: "Fira Sans", "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      overflow: hidden;
+      isolation: isolate;
+    }
+    #ph2-hero * { box-sizing: border-box; }
+    #ph2-hero h1, #ph2-hero .ph2-nav-logo-text {
+      font-family: "Manrope", "Helvetica Neue", Arial, sans-serif;
+    }
+    #ph2-hero a { text-decoration: none; }
+    #ph2-hero img, #ph2-hero svg { display: block; max-width: 100%; }
+
+    /* --- Header: nav pill flotante --- */
+    #ph2-hero .ph2-site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding-bottom: clamp(1.5rem, 4vw, 3rem);
+    }
+    #ph2-hero .ph2-nav-pill {
+      max-width: 1320px;
+      margin-inline: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      border-radius: 9999px;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+    }
+    #ph2-hero .ph2-nav-logo { display: flex; align-items: center; }
+    #ph2-hero .ph2-nav-logo-mark { width: 28px; height: 22.7px; }
+    #ph2-hero .ph2-nav-links {
+      display: flex; align-items: center; gap: 1.75rem;
+      list-style: none; margin: 0; padding: 0;
+    }
+    #ph2-hero .ph2-nav-links a {
+      font-size: 1rem; font-weight: 400; color: var(--ph2-text);
+      display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap;
+    }
+    #ph2-hero .ph2-nav-links svg { width: 14px; height: 14px; opacity: 0.6; }
+    #ph2-hero .ph2-nav-ctas { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    #ph2-hero .ph2-nav-btn {
+      font-weight: 700; font-size: 0.92rem; padding: 0.7rem 1.3rem;
+      border-radius: 9999px; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    #ph2-hero .ph2-nav-btn-solid { background: var(--ph2-accent); color: #ffffff; border: 1.5px solid transparent; }
+    @media (max-width: 900px) { #ph2-hero .ph2-nav-links { display: none; } }
+
+    /* --- Fondo de cuadrícula con relieve --- */
+    #ph2-hero .ph2-tile-grid {
+      position: absolute; inset: 0; z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 104px);
+      grid-auto-rows: 104px;
+      gap: 16px; padding: 12px;
+      justify-content: center;
+      pointer-events: none; opacity: 0.7;
+    }
+    #ph2-hero .ph2-tile-grid .ph2-tile {
+      aspect-ratio: 1 / 1; background: #ffffff; border-radius: 20px;
+      box-shadow: 0 2px 6px -1px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.02);
+    }
+    #ph2-hero .ph2-tile-grid .ph2-tile.elevated {
+      box-shadow: 0 8px 18px -4px rgba(0,0,0,0.06), 0 3px 6px -2px rgba(0,0,0,0.03);
+      transform: translateY(-2px);
+    }
+    #ph2-hero .ph2-tile-grid .ph2-tile.soft { background: #fbfcfd; opacity: 0.85; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    #ph2-hero .ph2-tile-grid .ph2-tile.dimmed { background: #f1f3f6; opacity: 0.65; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02); }
+    #ph2-hero .ph2-tile-grid-vignette {
+      position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.85) 100%);
+      pointer-events: none;
+    }
+
+    /* --- Canvas del haz de luz --- */
+    #ph2-beam-canvas {
+      position: absolute; inset: 0; z-index: 3;
+      display: block; width: 100%; height: 100%;
+      pointer-events: none;
+    }
+    #ph2-lamp-tick { display: inline; }
+
+    /* --- Bloque de texto --- */
+    #ph2-hero .ph2-hero-top {
+      display: flex; align-items: center; justify-content: center;
+      padding-block: clamp(2.5rem, 6vw, 4.5rem);
+      position: relative; z-index: 2;
+    }
+    #ph2-hero .ph2-hero-text { position: relative; z-index: 2; max-width: 900px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    #ph2-hero .ph2-hero-text h1 { font-size: var(--ph2-h1); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 1.3rem; }
+    #ph2-hero .ph2-hero-text h1 strong { color: var(--ph2-accent-bright); font-weight: 600; }
+    #ph2-hero .ph2-hero-text .ph2-sub {
+      color: var(--ph2-text-muted); font-weight: 400; font-size: 1.25rem; line-height: 1.4;
+      margin: 0 0 2rem; max-width: 860px;
+    }
+
+    /* --- Zona de la foto --- */
+    #ph2-hero .ph2-hero-bottom { position: relative; flex: 1 1 auto; min-height: 50vh; z-index: 2; }
+    #ph2-hero .ph2-hero-subject {
+      position: absolute; inset: 0; z-index: 1;
+      display: flex; align-items: flex-end; justify-content: center;
+      padding-top: clamp(3rem, 12vh, 6rem);
+    }
+    #ph2-hero .ph2-subject-photo {
+      position: relative; width: min(46%, 320px); aspect-ratio: 4 / 5;
+      border-radius: 18px; overflow: hidden; background: #eef2f7;
+    }
+    #ph2-hero .ph2-subject-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    #ph2-hero .ph2-subject-photo .ph2-is-off { filter: grayscale(1) brightness(1.02) contrast(0.92) opacity(0.5); }
+    #ph2-hero .ph2-subject-photo .ph2-is-lit { clip-path: circle(0px at 50% 50%); filter: saturate(1.05) brightness(1.0); }
+    #ph2-hero .ph2-subject-photo .ph2-placeholder-fill {
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 42% 32%, rgba(15,23,42,0.06), transparent 55%),
+                  repeating-linear-gradient(135deg, rgba(15,23,42,0.05) 0 2px, transparent 2px 10px), #eef2f7;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      color: var(--ph2-text-faint); font-size: 0.72rem; padding: 1rem;
+    }
+    @media (max-width: 860px) {
+      #ph2-hero { min-height: auto; padding-top: 6rem; padding-bottom: 3rem; }
+      #ph2-hero .ph2-subject-photo { width: min(90%, 420px); }
+    }
   </style>
 </head>
 <body>
@@ -1159,36 +1311,330 @@
   <div id="cursor-ring" aria-hidden="true"></div>
 
   <!-- ============================================================ NAV -->
-  <nav class="nav" id="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top" aria-label="Pharis, inicio">
-        <!-- Logo Pharis: dos paths en #508FF8 (viewBox 0 0 21 17) -->
-        <svg class="logo" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="#508FF8"/>
-          <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="#508FF8"/>
-        </svg>
-        <span class="wordmark">Pharis</span>
-      </a>
-      <div class="nav-links">
-        <a href="#problema">El problema</a>
-        <a href="#como-funciona">Cómo funciona</a>
-        <a href="#demo-video">Demo</a>
-        <a href="#profesor">Profesores</a>
-        <a href="#roi">Retorno</a>
-      </div>
-      <a href="#demo" class="btn btn-ghost nav-cta">Solicitar demo</a>
-      <div class="lang-switcher">
-        <a href="/" class="lang-btn active" hreflang="es">ES</a>
-        <span class="lang-divider">·</span>
-        <a href="/en/" class="lang-btn" hreflang="en">EN</a>
-      </div>
-    </div>
-  </nav>
-
   <main id="top">
 
-    <!-- ============================================================ HERO -->
-    <header class="section hero">
+  <!-- ============================================================ HERO v2 (dev) -->
+  <section id="ph2-hero">
+    <div class="ph2-tile-grid" id="ph2-tile-grid" aria-hidden="true"></div>
+    <div class="ph2-tile-grid-vignette" aria-hidden="true"></div>
+    <canvas id="ph2-beam-canvas" aria-hidden="true"></canvas>
+
+    <header class="ph2-site-header">
+      <nav class="ph2-nav-pill">
+        <a href="#top" class="ph2-nav-logo" aria-label="Pharis, inicio">
+          <svg class="ph2-nav-logo-mark" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M0.018654 0C0.291685 0.0346468 1.06363 0.351087 1.35507 0.444175C2.00683 0.652386 2.66098 0.893337 3.30632 1.1157L7.44425 2.51569C8.06511 2.72709 8.66921 2.90399 9.28163 3.14897C9.27745 3.58039 9.21329 4.21939 9.18326 4.67222C9.11664 5.7132 9.04471 6.75378 8.96742 7.79399C8.90088 8.70041 8.87595 9.5429 8.82382 10.438L8.61194 13.5626C8.55515 14.428 8.39189 15.9957 8.40472 16.8065C7.86712 16.785 7.20704 16.8116 6.65379 16.8015C6.24697 16.7941 5.34462 16.7703 4.9748 16.8225C5.17644 16.3851 5.28948 15.8819 5.4424 15.4234C6.19564 13.1646 6.9358 10.8953 7.67625 8.63259C7.92098 7.93723 8.10071 7.37357 8.29986 6.66252C7.99596 6.82813 7.43703 6.98952 7.09294 7.10483L5.15151 7.75164C3.9828 8.13023 2.75982 8.58522 1.59136 8.9865C1.14081 9.14125 0.395517 9.31603 0.0199016 9.55254C0.00992916 8.76633 -0.022738 7.75843 0.0263541 6.98817C0.650986 6.90894 9.11771 4.70463 9.03973 4.77851C8.91731 4.62324 7.17078 4.26203 6.87252 4.18944L3.81818 3.43088C2.59209 3.13691 1.23158 2.74788 0.000468966 2.50575C0.0457848 1.81065 0.0160509 0.727473 0.018654 0Z" fill="var(--ph2-accent)"/>
+            <path d="M20.2672 0.0289993L20.3871 0.0302827C20.4597 0.124471 20.4258 2.21354 20.4249 2.49028C18.2297 3.0131 16.04 3.55894 13.8563 4.12766C13.5136 4.21342 11.545 4.59757 11.479 4.78639C11.655 4.86837 12.1966 4.9594 12.4251 5.01729L15.214 5.71423C16.9305 6.1261 18.725 6.6281 20.4239 7.02197C20.4254 7.37599 20.4564 9.20695 20.3958 9.44314C19.9444 9.43269 16.2385 8.06739 15.5812 7.84396L13.6376 7.19099C13.1168 7.01981 12.568 6.86388 12.079 6.62051C12.3181 7.16521 12.5208 7.916 12.7227 8.50749C12.9069 8.9939 13.0299 9.48999 13.1962 9.98319L14.8492 14.9667C14.9894 15.3789 15.2887 16.4491 15.4624 16.7646C14.3807 16.8598 13.1516 16.7846 12.0532 16.8182C12.0684 16.5415 11.9832 15.6921 11.9634 15.3661L11.7317 11.8073C11.6749 10.9925 11.6565 10.2069 11.6083 9.40552C11.4933 7.31429 11.3464 5.22496 11.1675 3.13823C12.1316 2.77479 13.1446 2.46883 14.1199 2.12588C16.1561 1.40981 18.2385 0.762741 20.2672 0.0289993Z" fill="var(--ph2-accent)"/>
+          </svg>
+        </a>
+        <ul class="ph2-nav-links">
+          <li><a href="#problema">El problema</a></li>
+          <li><a href="#como-funciona">Cómo funciona</a></li>
+          <li><a href="#demo-video">Demo</a></li>
+          <li><a href="#profesor">Profesores</a></li>
+          <li><a href="#roi">Retorno</a></li>
+        </ul>
+        <div class="ph2-nav-ctas">
+          <a href="#demo" class="ph2-nav-btn ph2-nav-btn-solid">Solicitar demo</a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="ph2-hero-top">
+      <div class="ph2-hero-text">
+        <h1>El alumno en riesgo ya dio señales.<br /><strong>Phar<span id="ph2-lamp-tick">i</span>s las ve primero.</strong></h1>
+        <p class="ph2-sub">Detección temprana con IA que analiza patrones conductuales y métricas académicas, alertando a tutores y directores de carrera a tiempo para transformar el riesgo en persistencia y graduación.</p>
+      </div>
+    </div>
+
+    <div class="ph2-hero-bottom">
+      <div class="ph2-hero-subject">
+        <div class="ph2-subject-photo" id="ph2-subject-photo">
+          <!--
+            Producción: reemplazar estos dos <div class="ph2-placeholder-fill">
+            por <img class="ph2-is-off" src="alumno-apagado.jpg"> y
+            <img class="ph2-is-lit" src="alumno-iluminado.jpg">, en ese orden.
+          -->
+          <div class="ph2-placeholder-fill ph2-is-off">FOTO APAGADA<br />(desaturada / oscura)</div>
+          <div class="ph2-placeholder-fill ph2-is-lit">FOTO ILUMINADA<br />(color completo)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    (function () {
+      // ============================================================
+      // Haz de luz que nace en la "i" de Pharis y aterriza sobre la
+      // foto del alumno, revelándola de apagada a iluminada. Todo el
+      // modelo vive en píxeles CSS reales, escalado a píxeles de
+      // buffer del canvas solo al asignar los uniforms del shader.
+      // ============================================================
+      const canvas = document.getElementById('ph2-beam-canvas');
+      const hero = document.getElementById('ph2-hero');
+      const lampTick = document.getElementById('ph2-lamp-tick');
+      const litLayer = document.querySelector('#ph2-subject-photo .ph2-is-lit');
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+      const fragmentShader = `
+        precision highp float;
+        uniform vec2 uResolution;
+        uniform vec2 uLampPx;
+        uniform float uConeAngle;
+        uniform vec2 uLandPx;
+        uniform vec2 uSubjectPx;
+        uniform float uConeReachPx;
+        uniform float uTime;
+
+        void main() {
+          vec2 fragPx = vec2(gl_FragCoord.x, uResolution.y - gl_FragCoord.y);
+
+          vec2 p = fragPx - uLampPx;
+          float dist = length(p);
+
+          vec2 pDir = normalize(p);
+          vec2 coneDir = vec2(cos(uConeAngle), sin(uConeAngle));
+          float neckPx = min(uConeReachPx * 0.35, 60.0);
+          float widthT = smoothstep(0.0, neckPx, dist);
+          float coneWidth = mix(0.09, 0.22, widthT);
+          float angleDiff = acos(clamp(dot(pDir, coneDir), -1.0, 1.0));
+          float cone = smoothstep(coneWidth, coneWidth * 0.45, angleDiff);
+
+          float atten = 1.0 - smoothstep(uConeReachPx * 0.05, uConeReachPx * 1.15, dist);
+
+          float intensity = cone * atten;
+
+          float bulbDist = length(fragPx - uLampPx);
+          float bulbCore   = smoothstep(20.0, 0.0, bulbDist);
+          float bulbGlow1  = smoothstep(38.0, 0.0, bulbDist) * 0.55;
+          float bulbGlow2  = smoothstep(62.0, 0.0, bulbDist) * 0.30;
+          float bulbGlow3  = smoothstep(92.0, 0.0, bulbDist) * 0.14;
+          float bulb = clamp(bulbCore + bulbGlow1 + bulbGlow2 + bulbGlow3, 0.0, 1.0);
+          intensity += bulb;
+
+          float landDist = length(fragPx - uLandPx);
+          float landShape = smoothstep(uConeReachPx * 0.26, 0.0, landDist) * cone;
+          float subjectProximity = smoothstep(uConeReachPx * 0.30, 0.0, length(uLandPx - uSubjectPx));
+          float landFocus = landShape * mix(0.15, 1.0, subjectProximity);
+          intensity += landFocus * 0.85;
+
+          vec3 edgeColor = vec3(0.60, 0.75, 0.98);
+          vec3 coreColor = vec3(0.314, 0.561, 0.973);
+          float coreAmount = clamp(bulb + landFocus, 0.0, 1.0);
+          vec3 color = mix(edgeColor, coreColor, coreAmount);
+
+          float diffuseAlpha = clamp(intensity - bulb, 0.0, 1.0) * 0.62;
+          float alpha = clamp(bulb * 0.96 + diffuseAlpha, 0.0, 1.0);
+          gl_FragColor = vec4(color, alpha);
+        }
+      `;
+
+      const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
+
+      const uniforms = {
+        uResolution: { value: new THREE.Vector2(1, 1) },
+        uLampPx: { value: new THREE.Vector2(0, 0) },
+        uConeAngle: { value: 1.4 },
+        uLandPx: { value: new THREE.Vector2(0, 0) },
+        uSubjectPx: { value: new THREE.Vector2(0, 0) },
+        uConeReachPx: { value: 300 },
+        uTime: { value: 0 }
+      };
+
+      const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, transparent: true, depthTest: false });
+      const geometry = new THREE.PlaneGeometry(2, 2);
+      scene.add(new THREE.Mesh(geometry, material));
+
+      const measureCanvas = document.createElement('canvas');
+      const measureCtx = measureCanvas.getContext('2d');
+      function glyphAscent(char, fontSizePx, fontWeight, fontFamily) {
+        measureCtx.font = `${fontWeight} ${fontSizePx}px ${fontFamily}`;
+        return measureCtx.measureText(char).actualBoundingBoxAscent;
+      }
+
+      let subjectPx = { x: 0, y: 0 };
+      let lampPx = { x: 0, y: 0 };
+      let bufferScale = 1;
+
+      function computeSubjectGeometry() {
+        const heroRect = hero.getBoundingClientRect();
+        const photoRect = document.getElementById('ph2-subject-photo').getBoundingClientRect();
+
+        subjectPx = {
+          x: photoRect.left + photoRect.width / 2 - heroRect.left,
+          y: photoRect.top + photoRect.height * 0.38 - heroRect.top
+        };
+
+        const tickRect = lampTick.getBoundingClientRect();
+        const h1Style = getComputedStyle(document.querySelector('#ph2-hero h1'));
+        const fontSizePx = parseFloat(h1Style.fontSize);
+        const ascent = glyphAscent('i', fontSizePx, h1Style.fontWeight, h1Style.fontFamily);
+        const LAMP_OFFSET_X = fontSizePx * 0.1539;
+        const LAMP_OFFSET_Y = -fontSizePx * 0.3076;
+        lampPx = {
+          x: tickRect.left - heroRect.left + LAMP_OFFSET_X,
+          y: tickRect.bottom - ascent - heroRect.top + LAMP_OFFSET_Y
+        };
+
+        uniforms.uSubjectPx.value.set(subjectPx.x * bufferScale, subjectPx.y * bufferScale);
+        uniforms.uLampPx.value.set(lampPx.x * bufferScale, lampPx.y * bufferScale);
+        uniforms.uConeReachPx.value = Math.hypot(subjectPx.x - lampPx.x, subjectPx.y - lampPx.y) * bufferScale;
+      }
+
+      let centerAngle = 1.4;
+      function computeCenterAngle() {
+        centerAngle = Math.atan2(subjectPx.y - lampPx.y, subjectPx.x - lampPx.x);
+      }
+
+      function resize() {
+        const w = hero.clientWidth;
+        const h = hero.clientHeight;
+        renderer.setSize(w, h, false);
+        bufferScale = canvas.width / w;
+        uniforms.uResolution.value.set(canvas.width, canvas.height);
+        computeSubjectGeometry();
+        computeCenterAngle();
+      }
+      window.addEventListener('resize', resize);
+      resize();
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+      setTimeout(resize, 400);
+
+      function landingPointFor(angle) {
+        const targetY = subjectPx.y;
+        const dirX = Math.cos(angle);
+        const dirY = Math.sin(angle);
+        const tParam = (targetY - lampPx.y) / dirY;
+        return { x: lampPx.x + dirX * tParam, y: targetY };
+      }
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const clock = new THREE.Clock();
+
+      const SEARCH_SPEED = 1.3;
+      const SEARCH_STEPS = [
+        { offset: -0.30, holdBefore: 0.55, jumpDur: 0.55, backEase: false },
+        { offset:  0.10, holdBefore: 0.32, jumpDur: 0.22, backEase: true },
+        { offset: -0.20, holdBefore: 0.40, jumpDur: 0.30, backEase: true },
+        { offset:  0.34, holdBefore: 0.30, jumpDur: 0.26, backEase: true },
+        { offset:  0.04, holdBefore: 0.45, jumpDur: 0.20, backEase: true },
+        { offset:  0.00, holdBefore: 2.60, jumpDur: 0.34, backEase: true },
+      ].map(step => ({ ...step, holdBefore: step.holdBefore * SEARCH_SPEED, jumpDur: step.jumpDur * SEARCH_SPEED }));
+
+      const TOTAL_CYCLE = SEARCH_STEPS.reduce((s, k) => s + k.holdBefore + k.jumpDur, 0);
+
+      function easeOutBack(x) {
+        const c1 = 0.9, c3 = c1 + 1;
+        return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+      }
+      function easeInOutQuad(x) {
+        return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+      }
+
+      function coneAngleAt(t) {
+        let cursor = (t % TOTAL_CYCLE);
+        let prevOffset = SEARCH_STEPS[SEARCH_STEPS.length - 1].offset;
+
+        for (let i = 0; i < SEARCH_STEPS.length; i++) {
+          const step = SEARCH_STEPS[i];
+          const jumpDur = step.jumpDur;
+          const holdDur = step.holdBefore;
+
+          if (cursor < jumpDur) {
+            const p = jumpDur > 0.001 ? cursor / jumpDur : 1;
+            const clampedP = Math.min(Math.max(p, 0), 1);
+            const eased = step.backEase ? easeOutBack(clampedP) : easeInOutQuad(clampedP);
+            const offset = prevOffset + (step.offset - prevOffset) * eased;
+            return centerAngle + offset;
+          }
+          cursor -= jumpDur;
+
+          if (cursor < holdDur) return centerAngle + step.offset;
+          cursor -= holdDur;
+
+          prevOffset = step.offset;
+        }
+        return centerAngle;
+      }
+
+      function updatePhotoReveal(landX) {
+        const dx = Math.abs(landX - subjectPx.x);
+        const photoWidth = document.getElementById('ph2-subject-photo').getBoundingClientRect().width;
+        const subjectRadiusPx = photoWidth * 0.42;
+
+        const revealStart = subjectRadiusPx * 2.4;
+        const revealFull = subjectRadiusPx * 0.9;
+        const t = 1 - Math.min(Math.max((dx - revealFull) / (revealStart - revealFull), 0), 1);
+
+        const maxRadius = photoWidth * 0.85;
+        const radius = t * maxRadius;
+        litLayer.style.clipPath = `circle(${radius}px at 50% 38%)`;
+      }
+
+      function animate() {
+        const t = reduceMotion ? 0 : clock.getElapsedTime();
+        const angle = reduceMotion ? centerAngle : coneAngleAt(t);
+        uniforms.uConeAngle.value = angle;
+        uniforms.uTime.value = t;
+
+        const land = landingPointFor(angle);
+        uniforms.uLandPx.value.set(land.x * bufferScale, land.y * bufferScale);
+
+        updatePhotoReveal(land.x);
+
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+
+  <script>
+    // Genera las baldosas del fondo de cuadrícula del hero v2
+    (function buildTileGrid() {
+      const grid = document.getElementById('ph2-tile-grid');
+      const TILE = 104, GAP = 16;
+      const cell = TILE + GAP;
+
+      const variantAt = (row, col) => {
+        const k = (row * 7 + col * 3) % 11;
+        if (k === 0 || k === 6) return 'elevated';
+        if (k === 2 || k === 8) return 'soft';
+        if (k === 4 || k === 9) return 'dimmed';
+        return '';
+      };
+
+      function build() {
+        const hero = document.getElementById('ph2-hero');
+        const cols = Math.ceil(hero.clientWidth / cell) + 1;
+        const rows = Math.ceil(hero.clientHeight / cell) + 1;
+        grid.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const d = document.createElement('div');
+            const v = variantAt(r, c);
+            d.className = v ? 'ph2-tile ' + v : 'ph2-tile';
+            frag.appendChild(d);
+          }
+        }
+        grid.appendChild(frag);
+      }
+
+      build();
+      window.addEventListener('resize', build);
+    })();
+  </script>
+
+    <!-- ============================================================ HERO ANTIGUO (oculto, referencia) -->
+    <header class="section hero" style="display:none" aria-hidden="true">
       <div class="container hero-grid">
         <div class="hero-text">
           <p class="eyebrow reveal">Tutor con IA · Alerta temprana de deserción</p>
@@ -1796,10 +2242,14 @@
     document.getElementById("year").textContent = new Date().getFullYear();
 
     // ---------- Nav: borde al hacer scroll ----------
+    // El hero v2 (dev) usa su propio nav pill sin id="nav" — esta
+    // guarda evita el error cuando el nav antiguo no está presente.
     const nav = document.getElementById("nav");
-    const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    if (nav) {
+      const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 8);
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
 
     // ---------- Reveal con IntersectionObserver ----------
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

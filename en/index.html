@@ -4858,6 +4858,30 @@
     [alumnosEl, desercionEl, colegiaturaEl].forEach((el) => el.addEventListener("input", recalc));
     recalc();
 
+    // ---------- Enlaces internos sin "#" en la URL ----------
+    // Los enlaces a secciones (#problema, #demo...) desplazan la página
+    // sin escribir el fragmento en la barra de direcciones. Si alguien
+    // abre un enlace con #seccion, se respeta el salto y luego se limpia.
+    (function cleanHashLinks() {
+      const clean = () => history.replaceState(null, "", location.pathname + location.search);
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest('a[href^="#"]');
+        if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+        const id = a.getAttribute("href").slice(1);
+        const target = id ? document.getElementById(id) : null;
+        if (!target) return;
+        e.preventDefault();
+        if (id === "top") window.scrollTo({ top: 0, behavior: "smooth" });
+        else target.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (location.hash) clean();
+      });
+      if (location.hash) {
+        const t = document.getElementById(location.hash.slice(1));
+        if (t) requestAnimationFrame(() => { t.scrollIntoView({ block: "start" }); clean(); });
+        else clean();
+      }
+    })();
+
     // ---------- Nav fijo: espacio reservado y estado al hacer scroll ----------
     (function stickyNav() {
       const header = document.querySelector("#ph2-hero .ph2-site-header");

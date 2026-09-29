@@ -1,0 +1,36 @@
+# Pharis: el sitio es público y se permite rastrearlo, incluidos los
+# buscadores y asistentes de IA.
+User-agent: *
+Allow: /
+Disallow: /promo-marquee.html
+Disallow: /promo-small.html
+Disallow: /screenshot-materias.html
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://pharis.mx/sitemap.xml

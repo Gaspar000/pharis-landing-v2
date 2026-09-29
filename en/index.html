@@ -1911,7 +1911,7 @@
       --ph2-text-muted: #475569;
       --ph2-text-faint: #94a3b8;
       --ph2-rule: rgba(15, 23, 42, 0.10);
-      --ph2-h1: clamp(2.6rem, 6.4vw, 4.6rem);
+      --ph2-h1: clamp(2.5rem, 5.6vw, 4.1rem);
 
       position: relative;
       color: var(--ph2-text);
@@ -2117,24 +2117,26 @@
       width: 100%; max-width: 1180px; margin-inline: auto;
       display: flex; flex-direction: column; align-items: center;
       text-align: center;
-      padding-top: clamp(2.5rem, 6vw, 4.5rem);
+      /* Composición compacta: el alumno y el haz deben verse en la
+         primera pantalla de una laptop (~800px de alto). */
+      padding-top: clamp(0.25rem, 1.5vw, 1rem);
     }
     #ph2-hero .ph2-hero-text { max-width: 900px; display: flex; flex-direction: column; align-items: center; }
     #ph2-hero .ph2-hero-text h1 {
       font-size: var(--ph2-h1); font-weight: 600; line-height: 1.08;
-      letter-spacing: -0.02em; margin: 0 0 1.4rem;
+      letter-spacing: -0.02em; margin: 0 0 1.1rem;
     }
     #ph2-hero .ph2-hero-text h1 strong { color: var(--ph2-accent-bright); font-weight: 600; white-space: nowrap; }
     #ph2-hero .ph2-hero-text .ph2-sub {
-      color: var(--ph2-text-muted); font-weight: 400; font-size: 1.2rem; line-height: 1.55;
-      margin: 0 0 2rem; max-width: 40em;
+      color: var(--ph2-text-muted); font-weight: 400; font-size: 1.15rem; line-height: 1.55;
+      margin: 0; max-width: 40em;
     }
     /* --- Alumno: dos fotos con el mismo lienzo (recortadas y
        normalizadas), una apagada y otra iluminada. Poses distintas (mira
        el teléfono / levanta la mirada), así que no se revelan con un
        círculo encima: se funden. El JS reparte la opacidad según qué tan
        cerca del alumno cae el haz. --- */
-    #ph2-hero .ph2-hero-subject { display: flex; justify-content: center; margin-top: clamp(3rem, 8vh, 5rem); }
+    #ph2-hero .ph2-hero-subject { display: flex; justify-content: center; margin-top: clamp(0.75rem, 2.5vh, 1.75rem); }
 
     /* --- Las señales de Diego ---
        Tarjetas alrededor del alumno unidas a él con líneas (SVG trazado
@@ -2145,7 +2147,7 @@
       position: relative;
       width: min(1120px, 100%);
       display: flex; justify-content: center;
-      padding-top: 3rem;
+      padding-top: 2.4rem;
     }
     #ph2-hero .ph2-sig-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
     #ph2-hero .ph2-sig-lines path {
@@ -2241,6 +2243,7 @@
 
     @media (max-width: 900px) {
       #ph2-hero { min-height: auto; padding-bottom: 2rem; }
+      #ph2-hero .ph2-hero-main { padding-top: 1.5rem; }
       #ph2-hero .ph2-hero-text .ph2-sub { font-size: 1.08rem; }
       #ph2-hero .ph2-hero-text h1 strong { white-space: normal; }
       #ph2-hero .ph2-subject-photo { height: clamp(380px, 62vh, 520px); }

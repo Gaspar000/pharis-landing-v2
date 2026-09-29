@@ -1460,27 +1460,9 @@
     }
 
     .integ-foot { display: grid; gap: 1.6rem; margin-top: clamp(2rem, 4vw, 2.6rem); align-items: start; }
-    @media (min-width: 900px) { .integ-foot { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; } }
     .integ-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
     .integ-list li { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem; align-items: start; font-size: 0.98rem; line-height: 1.55; color: var(--light-muted); }
     .integ-list strong { color: var(--light-text); font-weight: 600; }
-    .lms-status { padding: 1.1rem 1.2rem; border: 1px solid var(--light-rule); border-radius: 14px; background: var(--light-panel); }
-    .lms-status p { margin: 0 0 0.75rem; font-family: "Fira Sans", sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--light-muted); }
-    .lms-status-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .lms-pill {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 999px;
-      border: 1px solid var(--light-rule);
-      font-size: 0.86rem;
-      font-weight: 500;
-      color: var(--light-text);
-    }
-    .lms-pill i { width: 7px; height: 7px; border-radius: 50%; background: #b9c3d3; }
-    .lms-pill b { font-weight: 600; color: var(--light-muted); }
-    .lms-pill--on { border-color: rgba(13, 143, 106, 0.3); background: rgba(13, 143, 106, 0.06); }
-    .lms-pill--on i { background: #0d8f6a; box-shadow: 0 0 0 3px rgba(13, 143, 106, 0.18); }
-    .lms-pill--on b { color: #0d8f6a; }
 
     /* ============================================================ CTA / FORM
        Cierre de la página. Izquierda: la promesa (eco de "El punto ciego")
@@ -3403,13 +3385,6 @@
               <span><strong>For students,</strong> a Chrome extension or a lightweight Windows app.</span>
             </li>
           </ul>
-          <div class="lms-status reveal" data-delay="1">
-            <p>Compatibility</p>
-            <div class="lms-status-row">
-              <span class="lms-pill lms-pill--on"><i></i>Moodle <b>Available</b></span>
-              <span class="lms-pill"><i></i>Canvas and others <b>In development</b></span>
-            </div>
-          </div>
         </div>
       </div>
     </section>
